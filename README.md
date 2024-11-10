@@ -1,5 +1,5 @@
 # simple-mern-microservice
-edited
+edited 2
 ## Introduction
 This is a template repository to help you get started with creating microservices within a larger MERN (MongoDB, Express, React, Node.js) project, like the **HorizonClouds** project. In this example, we’ll assume you’re setting up a **Product Management microservice**, but the structure and steps here can be applied to any microservice type. 
 
