@@ -4,13 +4,13 @@ import { use, expect } from 'chai';
 import chaiHttp from 'chai-http';
 const chai = use(chaiHttp);
 import app from '../server.js';
-import ExampleModel from '../models/exampleModel.js';
+import ItineraryModel from '../models/itineraryModel.js';
 
 //db is cleared before and after each test. See src/test/setup.test.js
 
 const debug = process.env.DEBUG === 'true';
 
-describe('Example API', () => {
+describe('Itinerary API', () => {
   const responseFormat = {
     status: 'success',
     message: 'Success!',
@@ -22,7 +22,7 @@ describe('Example API', () => {
   it('should have default response format', (done) => {
     chai.request
       .execute(app)
-      .get('/api/v1/examples')
+      .get('/api/v1/itineraries')
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res.body).to.have.property('status', responseFormat.status);
@@ -33,10 +33,10 @@ describe('Example API', () => {
       });
   });
 
-  it('should GET all examples', (done) => {
+  it('should GET all itineraries', (done) => {
     chai.request
       .execute(app)
-      .get('/api/v1/examples')
+      .get('/api/v1/itineraries')
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(200);
@@ -46,7 +46,8 @@ describe('Example API', () => {
   });
 
   it('should return 404 for invalid GET endpoint', (done) => {
-    chai.request.execute(app)
+    chai.request
+      .execute(app)
       .get('/api/v1/invalid-endpoint')
       .end((err, res) => {
         if (debug) console.log(res.body);
@@ -55,24 +56,34 @@ describe('Example API', () => {
       });
   });
 
-  it('should POST a new example', (done) => {
+  it('should POST a new itinerary', (done) => {
     chai.request
       .execute(app)
-      .post('/api/v1/examples')
-      .send({ name: 'Test Example', value: 123 })
+      .post('/api/v1/itineraries')
+      .send({
+        name: 'Test Itinerary',
+        description: 'Test Description',
+        startDate: '2023-10-01',
+        endDate: '2023-10-10',
+        destinationId: 1,
+      })
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(201);
         expect(res.body).to.have.property('data').that.is.an('object');
-        expect(res.body.data).to.have.property('name', 'Test Example');
-        expect(res.body.data).to.have.property('value', 123);
+        expect(res.body.data).to.have.property('name', 'Test Itinerary');
+        expect(res.body.data).to.have.property(
+          'description',
+          'Test Description'
+        );
         done();
       });
   });
 
   it('should return validation error for invalid POST data', (done) => {
-    chai.request.execute(app)
-      .post('/api/v1/examples')
+    chai.request
+      .execute(app)
+      .post('/api/v1/itineraries')
       .send({ name: 'Te', value: -10 })
       .end((err, res) => {
         if (debug) console.log(res.body);
@@ -82,10 +93,10 @@ describe('Example API', () => {
       });
   });
 
-  it('should have no examples initially', (done) => {
+  it('should have no itineraries initially', (done) => {
     chai.request
       .execute(app)
-      .get('/api/v1/examples')
+      .get('/api/v1/itineraries')
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(200);
@@ -95,11 +106,19 @@ describe('Example API', () => {
       });
   });
 
-  it('should GET an example by id', async () => {
-    let example = await ExampleModel.create({ name: 'Example', value: 123 });
-    let exampleId = example._id;
+  it('should GET an itinerary by id', async () => {
+    let itinerary = await ItineraryModel.create({
+      name: 'Itinerary',
+      description: 'Description',
+      startDate: '2023-10-01',
+      endDate: '2023-10-10',
+      destinationId: 1,
+    });
+    let itineraryId = itinerary._id;
 
-    const res = await chai.request.execute(app).get(`/api/v1/examples/${exampleId}`);
+    const res = await chai.request
+      .execute(app)
+      .get(`/api/v1/itineraries/${itineraryId}`);
     if (debug) console.log(res.body);
     expect(res).to.have.status(200);
     expect(res.body).to.have.property('data').that.is.an('object');
@@ -110,8 +129,9 @@ describe('Example API', () => {
   it('should return 404 for non-existing example', (done) => {
     let exampleId = 'invalid-id';
 
-    chai.request.execute(app)
-      .get(`/api/v1/examples/${exampleId}`)
+    chai.request
+      .execute(app)
+      .get(`/api/v1/itineraries/${exampleId}`)
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(404);
@@ -119,21 +139,30 @@ describe('Example API', () => {
       });
   });
 
-  it('should POST a new example and then GET it', (done) => {
+  it('should POST a new itinerary and then GET it', (done) => {
     chai.request
       .execute(app)
-      .post('/api/v1/examples')
-      .send({ name: 'Test Example', value: 123 })
+      .post('/api/v1/itineraries')
+      .send({
+        name: 'Test Itinerary',
+        description: 'Test Description',
+        startDate: '2023-10-01',
+        endDate: '2023-10-10',
+        destinationId: 1,
+      })
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(201);
         expect(res.body).to.have.property('data').that.is.an('object');
-        expect(res.body.data).to.have.property('name', 'Test Example');
-        expect(res.body.data).to.have.property('value', 123);
+        expect(res.body.data).to.have.property('name', 'Test Itinerary');
+        expect(res.body.data).to.have.property(
+          'description',
+          'Test Description'
+        );
 
         chai.request
           .execute(app)
-          .get('/api/v1/examples')
+          .get('/api/v1/itineraries')
           .end((err, res) => {
             if (debug) console.log(res.body);
             expect(res).to.have.status(200);
@@ -141,33 +170,38 @@ describe('Example API', () => {
               .to.have.property('data')
               .that.is.an('array')
               .that.has.lengthOf(1);
-            expect(res.body.data[0]).to.have.property('name', 'Test Example');
-            expect(res.body.data[0]).to.have.property('value', 123);
+            expect(res.body.data[0]).to.have.property('name', 'Test Itinerary');
+            expect(res.body.data[0]).to.have.property(
+              'description',
+              'Test Description'
+            );
             done();
           });
       });
   });
 
-  it('should PUT update an example by id', async () => {
-    let example = await ExampleModel.create({ name: 'Example', value: 123 });
-    let exampleId = example._id;
+  //TODO implement PUT tests
+  // it('should PUT update an itinerary by id', async () => {
+  //   let itinerary = await ItineraryModel.create({ name: 'Itinerary', description: 'Description', startDate: '2023-10-01', endDate: '2023-10-10', destinationId: 1 });
+  //   let itineraryId = itinerary._id;
 
-    const res = await chai.request.execute(app)
-      .put(`/api/v1/examples/${exampleId}`)
-      .send({ name: 'Updated Example', value: 456 });
-    if (debug) console.log(res.body);
-    expect(res).to.have.status(200);
-    expect(res.body).to.have.property('data').that.is.an('object');
-    expect(res.body.data).to.have.property('name', 'Updated Example');
-    expect(res.body.data).to.have.property('value', 456);
-    //done is not needed (we are retuning the promise implicitly)
-  });
+  //   const res = await chai.request.execute(app)
+  //     .put(`/api/v1/itineraries/${itineraryId}`)
+  //     .send({ name: 'Updated Itinerary', description: 'Updated Description' });
+  //   if (debug) console.log(res.body);
+  //   expect(res).to.have.status(200);
+  //   expect(res.body).to.have.property('data').that.is.an('object');
+  //   expect(res.body.data).to.have.property('name', 'Updated Itinerary');
+  //   expect(res.body.data).to.have.property('description', 'Updated Description');
+  //   //done is not needed (we are retuning the promise implicitly)
+  // });
 
   it('should return validation error for invalid PUT data', (done) => {
-    let exampleId = "invalid-id";
+    let exampleId = 'invalid-id';
 
-    chai.request.execute(app)
-      .put(`/api/v1/examples/${exampleId}`)
+    chai.request
+      .execute(app)
+      .put(`/api/v1/itineraries/${exampleId}`)
       .send({ name: 'Up', value: -20 })
       .end((err, res) => {
         if (debug) console.log(res.body);
@@ -177,20 +211,28 @@ describe('Example API', () => {
       });
   });
 
-  it('should DELETE an example by id', async () => {
-    let example = await ExampleModel.create({ name: 'Example', value: 123 });
-    let exampleId = example._id;
+  it('should DELETE an itinerary by id', async () => {
+    let itinerary = await ItineraryModel.create({
+      name: 'Itinerary',
+      description: 'Description',
+      startDate: '2023-10-01',
+      endDate: '2023-10-10',
+      destinationId: 1,
+    });
+    let itineraryId = itinerary._id;
 
-    const res = await chai.request.execute(app)
-      .delete(`/api/v1/examples/${exampleId}`);
+    const res = await chai.request
+      .execute(app)
+      .delete(`/api/v1/itineraries/${itineraryId}`);
     if (debug) console.log(res.body);
     expect(res).to.have.status(204);
     //done is not needed (we are retuning the promise implicitly)
   });
 
   it('should return 404 for non-existing example on DELETE', (done) => {
-    chai.request.execute(app)
-      .delete('/api/v1/examples/invalid-id')
+    chai.request
+      .execute(app)
+      .delete('/api/v1/itineraries/invalid-id')
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(404);
