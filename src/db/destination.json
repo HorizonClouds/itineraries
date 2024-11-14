@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "name": "Fuengirola Beach",
+        "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+        },
+        "description": "A beautiful beach in the south of Spain"
+    },
+    {
+        "id": 2,
+        "name": "Cala de Mijas",
+        "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+        },
+        "description": "A beautiful beach in the south of Spain"
+    },
+    {
+        "id": 3,
+        "name": "Marbella Beach",
+        "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+        },
+        "description": "A beautiful beach in the south of Spain"
+    },
+    {
+        "id": 4,
+        "name": "Benalmadena Beach",
+        "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+        },
+        "description": "A beautiful beach in the south of Spain"
+    },
+    {
+        "id": 5,
+        "name": "Torremolinos Beach",
+        "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+        },
+        "description": "A beautiful beach in the south of Spain"
+    }
+]

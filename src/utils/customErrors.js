@@ -18,7 +18,7 @@ class AppError extends Error {
   }
 }
 
-// Common error examples
+// Common error itineraries
 export class NotFoundError extends AppError {
   constructor(message = 'Resource not found', details, appCode = 'NOT_FOUND') {
     super(message, 404, details, appCode);

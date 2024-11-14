@@ -1,9 +1,9 @@
 # simple-mern-microservice
 edited 2
 ## Introduction
-This is a template repository to help you get started with creating microservices within a larger MERN (MongoDB, Express, React, Node.js) project, like the **HorizonClouds** project. In this example, we’ll assume you’re setting up a **Product Management microservice**, but the structure and steps here can be applied to any microservice type. 
+This is a template repository to help you get started with creating microservices within a larger MERN (MongoDB, Express, React, Node.js) project, like the **HorizonClouds** project. In this itinerary, we’ll assume you’re setting up a **Product Management microservice**, but the structure and steps here can be applied to any microservice type. 
 
-Whether you're working on products, orders, or user data, this template offers the base files, structure, and example code you'll need to implement and customize your service efficiently.
+Whether you're working on products, orders, or user data, this template offers the base files, structure, and itinerary code you'll need to implement and customize your service efficiently.
 
 ---
 
@@ -75,15 +75,15 @@ Here’s the general layout of the project, designed for clear separation of con
 │   ├── api
 │   │   └── oas.yaml             # API documentation in OpenAPI format
 │   ├── models
-│   │   └── exampleModel.js      # Mongoose models (example provided)
+│   │   └── itineraryModel.js      # Mongoose models (itinerary provided)
 │   ├── routes
-│   │   └── exampleRoute.js      # API route definitions
+│   │   └── itineraryRoute.js      # API route definitions
 │   ├── controllers              # Route handlers (for complex logic)
-│   │   └── exampleController.js
+│   │   └── itineraryController.js
 │   ├── server.js                # Main server file
 │   ├── swagger.js               # Swagger setup for API documentation
 │   └── test                     # Unit and integration tests
-│       ├── example.test.js
+│       ├── itinerary.test.js
 │       └── setup.test.js
 └── projectstructurefoldersandfiles.md  # File detailing the folder structure
 ```
@@ -199,7 +199,7 @@ With this template, you have plenty of options to customize and expand as needed
    Add API documentation using Swagger. The `src/api/oas.yaml` file can be used to define endpoints, parameters, and responses.
 
 3. **Testing**:
-   Write unit and integration tests to verify each function’s behavior. For example, `example.test.js` in **`src/test/`** contains sample tests that you can adapt.
+   Write unit and integration tests to verify each function’s behavior. For itinerary, `itinerary.test.js` in **`src/test/`** contains sample tests that you can adapt.
 
    ```javascript
    import chai, { expect } from 'chai';
@@ -231,4 +231,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-By following these steps, you should have a functional Product Management microservice up and running. This example covers the setup for managing products, but you can use the same structure and process to build any other microservice for the HorizonClouds project or other MERN-based applications.
+By following these steps, you should have a functional Product Management microservice up and running. This itinerary covers the setup for managing products, but you can use the same structure and process to build any other microservice for the HorizonClouds project or other MERN-based applications.

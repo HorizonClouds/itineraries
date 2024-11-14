@@ -1,19 +1,19 @@
 openapi: 3.0.0
 info:
-  title: Example API
+  title: Itinerary API
   version: 1.0.0
-  description: API documentation for Example microservice
+  description: API documentation for Itinerary microservice
 servers:
   - url: http://localhost:3000/api/v1
 paths:
-  /examples:
+  /itineraries:
     get:
-      summary: Get all examples
+      summary: Get all itineraries
       tags:
-        - Example
+        - Itinerary
       responses:
         '200':
-          description: A list of examples
+          description: A list of itineraries
           content:
             application/json:
               schema:
@@ -21,33 +21,33 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: success
+                    itinerary: success
                   message:
                     type: string
-                    example: Success!
+                    itinerary: Success!
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Example'
+                      $ref: '#/components/schemas/Itinerary'
                   appCode:
                     type: string
-                    example: OK
+                    itinerary: OK
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
+                    itinerary: '2023-10-01T12:00:00.000Z'
     post:
-      summary: Create a new example
+      summary: Create a new itinerary
       tags:
-        - Example
+        - Itinerary
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewExample'
+              $ref: '#/components/schemas/NewItinerary'
       responses:
         '201':
-          description: The created example
+          description: The created itinerary
           content:
             application/json:
               schema:
@@ -55,33 +55,33 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: success
+                    itinerary: success
                   message:
                     type: string
-                    example: Example created successfully
+                    itinerary: Itinerary created successfully
                   data:
-                    $ref: '#/components/schemas/Example'
+                    $ref: '#/components/schemas/Itinerary'
                   appCode:
                     type: string
-                    example: OK
+                    itinerary: OK
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
-  /examples/{id}:
+                    itinerary: '2023-10-01T12:00:00.000Z'
+  /itineraries/{id}:
     get:
-      summary: Get a specific example by ID
+      summary: Get a specific itinerary by ID
       tags:
-        - Example
+        - Itinerary
       parameters:
         - in: path
           name: id
           required: true
-          description: ID of the example to get
+          description: ID of the itinerary to get
           schema:
             type: string
       responses:
         '200':
-          description: The requested example
+          description: The requested itinerary
           content:
             application/json:
               schema:
@@ -89,20 +89,20 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: success
+                    itinerary: success
                   message:
                     type: string
-                    example: Success!
+                    itinerary: Success!
                   data:
-                    $ref: '#/components/schemas/Example'
+                    $ref: '#/components/schemas/Itinerary'
                   appCode:
                     type: string
-                    example: OK
+                    itinerary: OK
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
+                    itinerary: '2023-10-01T12:00:00.000Z'
         '404':
-          description: Example not found
+          description: Itinerary not found
           content:
             application/json:
               schema:
@@ -110,25 +110,25 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: error
+                    itinerary: error
                   message:
                     type: string
-                    example: Example not found
+                    itinerary: Itinerary not found
                   appCode:
                     type: string
-                    example: UNKNOWN_ERROR
+                    itinerary: UNKNOWN_ERROR
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
+                    itinerary: '2023-10-01T12:00:00.000Z'
     put:
-      summary: Update an existing example by ID
+      summary: Update an existing itinerary by ID
       tags:
-        - Example
+        - Itinerary
       parameters:
         - in: path
           name: id
           required: true
-          description: ID of the example to update
+          description: ID of the itinerary to update
           schema:
             type: string
       requestBody:
@@ -136,10 +136,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Example'
+              $ref: '#/components/schemas/Itinerary'
       responses:
         '200':
-          description: The updated example
+          description: The updated itinerary
           content:
             application/json:
               schema:
@@ -147,20 +147,20 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: success
+                    itinerary: success
                   message:
                     type: string
-                    example: Example updated successfully
+                    itinerary: Itinerary updated successfully
                   data:
-                    $ref: '#/components/schemas/Example'
+                    $ref: '#/components/schemas/Itinerary'
                   appCode:
                     type: string
-                    example: OK
+                    itinerary: OK
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
+                    itinerary: '2023-10-01T12:00:00.000Z'
         '404':
-          description: Example not found
+          description: Itinerary not found
           content:
             application/json:
               schema:
@@ -168,32 +168,32 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: error
+                    itinerary: error
                   message:
                     type: string
-                    example: Example not found
+                    itinerary: Itinerary not found
                   appCode:
                     type: string
-                    example: UNKNOWN_ERROR
+                    itinerary: UNKNOWN_ERROR
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
+                    itinerary: '2023-10-01T12:00:00.000Z'
     delete:
-      summary: Delete an example by ID
+      summary: Delete an itinerary by ID
       tags:
-        - Example
+        - Itinerary
       parameters:
         - in: path
           name: id
           required: true
-          description: ID of the example to delete
+          description: ID of the itinerary to delete
           schema:
             type: string
       responses:
         '204':
           description: Successfully deleted
         '404':
-          description: Example not found
+          description: Itinerary not found
           content:
             application/json:
               schema:
@@ -201,19 +201,19 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: error
+                    itinerary: error
                   message:
                     type: string
-                    example: Example not found
+                    itinerary: Itinerary not found
                   appCode:
                     type: string
-                    example: UNKNOWN_ERROR
+                    itinerary: UNKNOWN_ERROR
                   timestamp:
                     type: string
-                    example: '2023-10-01T12:00:00.000Z'
+                    itinerary: '2023-10-01T12:00:00.000Z'
 components:
   schemas:
-    Example:
+    Itinerary:
       type: object
       properties:
         _id:
@@ -221,22 +221,153 @@ components:
           example: '60c72b2f9b1d8f0d8d0b6f9e'
         name:
           type: string
-          example: Example Name
-        value:
+          example: Itinerary Name
+        description:
+          type: string
+          example: A trip to the beach with friends
+        startDate:
+          type: string
+          format: date-time
+          example: '2022-12-01T00:00:00.000Z'
+        endDate:
+          type: string
+          format: date-time
+          example: '2022-12-05T00:00:00.000Z'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-12-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-12-01T00:00:00.000Z'
+        destinationId:
           type: number
-          example: 123
+          example: 1
+        activities:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              itineraryId:
+                type: number
+                example: 1
+              name:
+                type: string
+                example: Surfing
+              description:
+                type: string
+                example: Surfing at the beach
+              startDate:
+                type: string
+                format: date-time
+                example: '2022-12-02T00:00:00.000Z'
+              endDate:
+                type: string
+                format: date-time
+                example: '2022-12-02T00:00:00.000Z'
+              createdAt:
+                type: string
+                format: date-time
+                example: '2022-12-01T00:00:00.000Z'
+              updatedAt:
+                type: string
+                format: date-time
+                example: '2022-12-01T00:00:00.000Z'
+              location:
+                type: object
+                properties:
+                  latitude:
+                    type: number
+                    example: 37.7749
+                  longitude:
+                    type: number
+                    example: -122.4194
+                  address:
+                    type: string
+                    example: Fuengirola Beach
+        comments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              itineraryId:
+                type: number
+                example: 1
+              userId:
+                type: number
+                example: 1
+              comment:
+                type: string
+                example: I loved the experience!
+              createdAt:
+                type: string
+                format: date-time
+                example: '2022-12-01T00:00:00.000Z'
+              updatedAt:
+                type: string
+                format: date-time
+                example: '2022-12-01T00:00:00.000Z'
+        ratings:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              itineraryId:
+                type: number
+                example: 1
+              userId:
+                type: number
+                example: 1
+              rating:
+                type: number
+                example: 5
+              createdAt:
+                type: string
+                format: date-time
+                example: '2022-12-01T00:00:00.000Z'
+              updatedAt:
+                type: string
+                format: date-time
+                example: '2022-12-01T00:00:00.000Z'
       required:
         - name
-        - value
-    NewExample:
+        - description
+        - startDate
+        - endDate
+        - destinationId
+    NewItinerary:
       type: object
       properties:
         name:
           type: string
-          example: Example Name
-        value:
+          example: Itinerary Name
+        description:
+          type: string
+          example: A trip to the beach with friends
+        startDate:
+          type: string
+          format: date-time
+          example: '2022-12-01T00:00:00.000Z'
+        endDate:
+          type: string
+          format: date-time
+          example: '2022-12-05T00:00:00.000Z'
+        destinationId:
           type: number
-          example: 123
+          example: 1
       required:
         - name
-        - value
+        - description
+        - startDate
+        - endDate
+        - destinationId
