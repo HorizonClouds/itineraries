@@ -36,8 +36,8 @@ const itinerarySchema = new mongoose.Schema({
   },
   activities: [
     {
-      id: Number,
-      itineraryId: Number,
+      id: String,
+      itineraryId: String,
       name: String,
       description: String,
       startDate: Date,
@@ -53,8 +53,7 @@ const itinerarySchema = new mongoose.Schema({
   ],
   comments: [
     {
-      id: Number,
-      itineraryId: Number,
+      id: String,
       userId: Number,
       comment: String,
       createdAt: Date,
@@ -63,8 +62,7 @@ const itinerarySchema = new mongoose.Schema({
   ],
   ratings: [
     {
-      id: Number,
-      itineraryId: Number,
+      id: String,
       userId: Number,
       rating: Number,
       createdAt: Date,
@@ -77,3 +75,7 @@ const itinerarySchema = new mongoose.Schema({
 const ItineraryModel = mongoose.model('Itinerary', itinerarySchema);
 
 export default ItineraryModel; // Export the model
+
+
+
+
