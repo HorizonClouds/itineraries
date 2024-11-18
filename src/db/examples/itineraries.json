@@ -1,7 +1,7 @@
 [
     {
-        "id": 1,
-        "userId": 1,
+        "id": "iti-1",
+        "userId": "usr-1",
         "name": "Trip to the beach",
         "description": "A trip to the beach with friends",
         "startDate": "2022-12-01T00:00:00.000Z",
@@ -11,8 +11,8 @@
         "destinationId": 1,
         "activities": [
             {
-                "id": 1,
-                "itineraryId": 1,
+                "id": "act-1",
+                "itineraryId": "iti-1",
                 "name": "Surfing",
                 "description": "Surfing at the beach",
                 "startDate": "2022-12-02T00:00:00.000Z",
@@ -26,8 +26,8 @@
                 }
             },
             {
-                "id": 2,
-                "itineraryId": 1,
+                "id": "act-2",
+                "itineraryId": "iti-1",
                 "name": "Dinner",
                 "description": "Dinner at the beach",
                 "startDate": "2022-12-02T00:00:00.000Z",
@@ -37,26 +37,39 @@
                 "location": {
                     "latitude": 37.7749,
                     "longitude": -122.4194,
-                    "address": "Fuengirola Beach"
+                    "address": "Marbella Beach"
                 }
             }
         ],
         "comments": [
             {
-                "id": 1,
-                "itineraryId": 1,
-                "userId": 1,
-                "comment": "I loved the experience!",
+                "id": "com-1",
+                "itineraryId": "iti-1",
+                "userId": "usr-2",
+                "title": "Great experience",
+                "message": "It's a great experience to be at the beach!",
+                "createdAt": "2022-12-01T00:00:00.000Z",
+                "updatedAt": "2022-12-01T00:00:00.000Z"
+            },
+            {
+                "id": "com-2",
+                "itineraryId": "iti-1",
+                "userId": "usr-3",
+                "title": "Memorable trip",
+                "message": "I had a great time with my friends!",
                 "createdAt": "2022-12-01T00:00:00.000Z",
                 "updatedAt": "2022-12-01T00:00:00.000Z"
             }
+
         ],
-        "ratings": [
+        "reviews": [
             {
-                "id": 1,
-                "itineraryId": 1,
-                "userId": 1,
-                "rating": 5,
+                "id": "rev-1",
+                "itineraryId": "iti-1",
+                "userId": "usr-2",
+                "score": 9,
+                "title": "Great experience",
+                "message": "I loved the experience!",
                 "createdAt": "2022-12-01T00:00:00.000Z",
                 "updatedAt": "2022-12-01T00:00:00.000Z"
             }

@@ -4,7 +4,7 @@ import { use, expect } from 'chai';
 import chaiHttp from 'chai-http';
 const chai = use(chaiHttp);
 import app from '../server.js';
-import ItineraryModel from '../models/itineraryModel.js';
+import ItineraryModel from '../db/models/itineraryModel.js';
 
 //db is cleared before and after each test. See src/test/setup.test.js
 
@@ -72,10 +72,7 @@ describe('Itinerary API', () => {
         expect(res).to.have.status(201);
         expect(res.body).to.have.property('data').that.is.an('object');
         expect(res.body.data).to.have.property('name', 'Test Itinerary');
-        expect(res.body.data).to.have.property(
-          'description',
-          'Test Description'
-        );
+        expect(res.body.data).to.have.property('description', 'Test Description');
         done();
       });
   });
@@ -100,8 +97,7 @@ describe('Itinerary API', () => {
       .end((err, res) => {
         if (debug) console.log(res.body);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('data').that.is.an('array').that.is
-          .empty;
+        expect(res.body).to.have.property('data').that.is.an('array').that.is.empty;
         done();
       });
   });
@@ -116,9 +112,7 @@ describe('Itinerary API', () => {
     });
     let itineraryId = itinerary._id;
 
-    const res = await chai.request
-      .execute(app)
-      .get(`/api/v1/itineraries/${itineraryId}`);
+    const res = await chai.request.execute(app).get(`/api/v1/itineraries/${itineraryId}`);
     if (debug) console.log(res.body);
     expect(res).to.have.status(200);
     expect(res.body).to.have.property('data').that.is.an('object');
@@ -155,10 +149,7 @@ describe('Itinerary API', () => {
         expect(res).to.have.status(201);
         expect(res.body).to.have.property('data').that.is.an('object');
         expect(res.body.data).to.have.property('name', 'Test Itinerary');
-        expect(res.body.data).to.have.property(
-          'description',
-          'Test Description'
-        );
+        expect(res.body.data).to.have.property('description', 'Test Description');
 
         chai.request
           .execute(app)
@@ -166,15 +157,9 @@ describe('Itinerary API', () => {
           .end((err, res) => {
             if (debug) console.log(res.body);
             expect(res).to.have.status(200);
-            expect(res.body)
-              .to.have.property('data')
-              .that.is.an('array')
-              .that.has.lengthOf(1);
+            expect(res.body).to.have.property('data').that.is.an('array').that.has.lengthOf(1);
             expect(res.body.data[0]).to.have.property('name', 'Test Itinerary');
-            expect(res.body.data[0]).to.have.property(
-              'description',
-              'Test Description'
-            );
+            expect(res.body.data[0]).to.have.property('description', 'Test Description');
             done();
           });
       });
@@ -221,9 +206,7 @@ describe('Itinerary API', () => {
     });
     let itineraryId = itinerary._id;
 
-    const res = await chai.request
-      .execute(app)
-      .delete(`/api/v1/itineraries/${itineraryId}`);
+    const res = await chai.request.execute(app).delete(`/api/v1/itineraries/${itineraryId}`);
     if (debug) console.log(res.body);
     expect(res).to.have.status(204);
     //done is not needed (we are retuning the promise implicitly)

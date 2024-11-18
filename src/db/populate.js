@@ -1,20 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const db = require('./db'); // Assuming you have a db module to interact with your database
+//Populate the database with some data, using db/connection.js to connect to the database.
+import connectDB from './connection.js';
+import fs from 'fs';
+import ItineraryModel from './models/itineraryModel.js';
 
-const populateDatabase = async () => {
-  const filePath = path.join(__dirname, 'data.js'); // Adjust the path to your data file
-  const data = require(filePath);
+const filesPath = './src/db/examples/';
 
-  try {
-    // Assuming data is an array of items to be inserted into the database
-    for (const item of data) {
-      await db.insert(item); // Adjust this to your actual database insertion logic
-    }
-    console.log('Database populated successfully');
-  } catch (error) {
-    console.error('Error populating database:', error);
-  }
+const populate = async () => {
+  await connectDB();
+
+  const itineraries = JSON.parse(fs.readFileSync(filesPath + 'itineraries.json', 'utf-8'));
+  await ItineraryModel.insertMany(itineraries);
+  console.log('Itineraries populated');
+  process.exit();
 };
-
-module.exports = populateDatabase;
+populate();

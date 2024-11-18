@@ -1,0 +1,193 @@
+paths:
+  /v1/itineraries/{itineraryId}/activities:
+    post:
+      summary: Add a new activity to an itinerary
+      tags:
+        - Activities
+      parameters:
+        - in: path
+          name: itineraryId
+          required: true
+          description: ID of the itinerary
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Surfing
+                description:
+                  type: string
+                  example: Surfing at the beach
+                startDate:
+                  type: string
+                  format: date-time
+                  example: "2022-12-02T00:00:00.000Z"
+                endDate:
+                  type: string
+                  format: date-time
+                  example: "2022-12-02T00:00:00.000Z"
+                location:
+                  type: object
+                  properties:
+                    latitude:
+                      type: number
+                      example: 37.7749
+                    longitude:
+                      type: number
+                      example: -122.4194
+                    address:
+                      type: string
+                      example: Fuengirola Beach
+              required:
+                - name
+                - description
+                - startDate
+                - endDate
+      responses:
+        "201":
+          description: Activity added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Activity added successfully
+                  data:
+                    $ref: "#/components/schemas/Activity"
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+    get:
+      summary: Get all activities for a specific itinerary
+      tags:
+        - Activities
+      parameters:
+        - in: path
+          name: itineraryId
+          required: true
+          description: ID of the itinerary
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of activities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Success!
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Activity"
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+        "404":
+          description: Itinerary not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Itinerary not found
+                  appCode:
+                    type: string
+                    example: NOT_FOUND
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+
+  /v1/itineraries/{itineraryId}/activities/{activityId}:
+    delete:
+      summary: Delete an activity from an itinerary
+      tags:
+        - Activities
+      parameters:
+        - in: path
+          name: itineraryId
+          required: true
+          description: ID of the itinerary
+          schema:
+            type: string
+        - in: path
+          name: activityId
+          required: true
+          description: ID of the activity
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Activity deleted successfully
+        "404":
+          description: Activity or itinerary not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Activity or itinerary not found
+                  appCode:
+                    type: string
+                    example: UNKNOWN_ERROR
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+
+components:
+  schemas:
+    Activity:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+            address:
+              type: string

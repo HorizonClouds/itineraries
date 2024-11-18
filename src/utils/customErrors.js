@@ -1,41 +1,55 @@
-// Base class for custom application errors
-class AppError extends Error {
-  constructor(
-    message,
-    statusCode = 500,
-    details = null,
-    appCode = 'UNKNOWN_ERROR'
-  ) {
-    super(message);
-    this.statusCode = statusCode;
-    this.details = details;
-    this.appCode = appCode; // Add unique application error code for categorization
-
-    // Preserve the stack trace for easier debugging
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor);
-    }
-  }
-}
+import { stdOptions } from './standardResponse.js';
 
 // Common error itineraries
-export class NotFoundError extends AppError {
-  constructor(message = 'Resource not found', details, appCode = 'NOT_FOUND') {
-    super(message, 404, details, appCode);
+export class NotFoundError extends Error {
+  constructor(message = 'Resource not found', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.notFound;
+    this.statusCode = stdOptions.codes.notFound;
   }
 }
 
-export class BadRequestError extends AppError {
-  constructor(message = 'Bad request', details, appCode = 'BAD_REQUEST') {
-    super(message, 400, details, appCode);
+export class BadRequestError extends Error {
+  constructor(message = 'Bad request', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.badRequest;
+    this.statusCode = stdOptions.codes.badRequest;
   }
 }
 
-export class ValidationError extends AppError {
-  constructor(message = 'Invalid data', details, appCode = 'VALIDATION_ERROR') {
-    // Attach detailed information about validation errors
-    super(message, 400, details, appCode);
+export class ValidationError extends Error {
+  constructor(message = 'Validation failed', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.validationError;
+    this.statusCode = stdOptions.codes.badRequest;
   }
 }
 
-export default AppError;
+export class UnauthorizedError extends Error {
+  constructor(message = 'Unauthorized', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.unauthorized;
+    this.statusCode = stdOptions.codes.unauthorized;
+  }
+}
+
+export class ForbiddenError extends Error {
+  constructor(message = 'Forbidden', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.forbidden;
+    this.statusCode = stdOptions.codes.forbidden;
+  }
+}
+
+export default {
+  NotFoundError,
+  BadRequestError,
+  ValidationError,
+  UnauthorizedError,
+  ForbiddenError,
+};
