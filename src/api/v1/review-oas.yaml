@@ -1,0 +1,250 @@
+paths:
+  /v1/itineraries/{id}/review:
+    post:
+      summary: Submit a review for an itinerary
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the itinerary to review
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Review"
+      responses:
+        "201":
+          description: Review added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Review added successfully
+                  data:
+                    $ref: "#/components/schemas/Review"
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+                  id:
+                    type: string
+                    example: "rev-12345"
+  /v1/itineraries/{id}/reviews:
+    get:
+      summary: Get all reviews for a specific itinerary
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the itinerary to get reviews for
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+  /v1/reviews/{reviewId}:
+    delete:
+      summary: Delete a review
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: reviewId
+          required: true
+          description: ID of the review to delete
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Review deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Review deleted successfully
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+        "404":
+          description: Review not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Review not found
+                  appCode:
+                    type: string
+                    example: NOT_FOUND
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Server error
+                  appCode:
+                    type: string
+                    example: SERVER_ERROR
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+  /v1/itineraries/{itineraryId}/average-reviews-score:
+    get:
+      summary: Get the average review score for a specific itinerary
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: itineraryId
+          required: true
+          description: ID of the itinerary to get the average review score for
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Average review score retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Average score retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      averageReview:
+                        type: number
+                        example: 4.5
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+        "404":
+          description: Itinerary not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Itinerary not found
+                  appCode:
+                    type: string
+                    example: NOT_FOUND
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Server error
+                  appCode:
+                    type: string
+                    example: SERVER_ERROR
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+
+components:
+  schemas:
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "rev-12345"
+        itineraryId:
+          type: string
+          example: "60c72b2f9b1d8f0d8d0b6f9e"
+        userId:
+          type: string
+          example: "user12345"
+        score:
+          type: number
+          example: 5
+        title:
+          type: string
+          example: "Great experience!"
+        message:
+          type: string
+          example: "Amazing experience!"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2022-12-01T00:00:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2022-12-01T00:00:00.000Z"
+      required:
+        - id
+        - itineraryId
+        - userId
+        - score
+        - title
+        - message

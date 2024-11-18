@@ -12,7 +12,7 @@
     "dev": "nodemon -L",
     "start-mongodb": "docker run --name mongodb -d -p 27017:27017 -v mongo-data:/data/db mongo",
     "populate": "node src/db/populate.js",
-    "format": "prettier --write \"src/**/*.{js,cjs,mjs}\"",
+    "format": "prettier --print-width 120 --write \"src/**/*.{js,cjs,mjs}\"",
     "test": "cross-env NODE_ENV=test mocha 'src/test/**/*.js' --recursive --exit --timeout 10000"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "express-validator": "^7.2.0",
     "joi": "^17.13.3",
     "mongoose": "^8.8.0",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^11.0.3",
     "yamljs": "^0.3.0"

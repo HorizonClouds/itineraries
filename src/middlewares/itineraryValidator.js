@@ -1,5 +1,6 @@
-import { body, param, validationResult } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import { ValidationError } from '../utils/customErrors.js';
+import ItineraryModel from '../db/models/itineraryModel.js';
 
 // Validation middleware for ItineraryModel
 export const validateItinerary = [
@@ -39,22 +40,14 @@ export const validateItinerary = [
   body('destinationId')
     .exists({ checkNull: true })
     .withMessage('Destination ID is required')
-    .isNumeric()
     .withMessage('Destination ID must be a number'),
 
   // Middleware to handle validation errors
   (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        throw new ValidationError('Validation failed', errors.array());
-      }
-      next();
-    } catch (error) {
-      res.sendError(
-        new ValidationError('An error occurred while validating', [error])
-      );
-      return;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      next(new ValidationError('An error occurred while validating the itinerary', errors.array()));
     }
+    next();
   },
 ];

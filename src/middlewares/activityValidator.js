@@ -1,6 +1,3 @@
-
-
-
 import { body, validationResult } from 'express-validator';
 import { ValidationError } from '../utils/customErrors.js';
 
@@ -31,7 +28,6 @@ export const validateActivity = [
     .isISO8601()
     .withMessage('End date must be a valid date'),
 
-  
   // Middleware to handle validation errors
   (req, res, next) => {
     try {
@@ -41,9 +37,7 @@ export const validateActivity = [
       }
       next();
     } catch (error) {
-      res.sendError(
-        new ValidationError('An error occurred while validating', [error])
-      );
+      res.sendError(new ValidationError('An error occurred while validating', [error]));
       return;
     }
   },

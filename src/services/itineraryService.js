@@ -1,4 +1,4 @@
-import ItineraryModel from '../models/itineraryModel.js';
+import ItineraryModel from '../db/models/itineraryModel.js';
 import { NotFoundError, BadRequestError } from '../utils/customErrors.js';
 
 export const getAllItineraries = async () => {

@@ -25,21 +25,9 @@ export const getAllItineraries = async (req, res, next) => {
 export const createItinerary = async (req, res, next) => {
   try {
     const newItinerary = await itineraryService.createItinerary(req.body);
-    res.sendSuccess(
-      removeMongoFields(newItinerary),
-      'Itinerary created successfully',
-      201
-    );
+    res.sendSuccess(removeMongoFields(newItinerary), 'Itinerary created successfully', 201);
   } catch (error) {
-    if (error.name === 'ValidationError') {
-      res.sendError(new ValidationError('Validation failed', error.errors));
-    } else {
-      res.sendError(
-        new ValidationError('An error occurred while creating the itinerary', [
-          { msg: error.message },
-        ])
-      );
-    }
+    next(error);
   }
 };
 
@@ -58,15 +46,9 @@ export const updateItinerary = async (req, res, next) => {
     let data = req.body;
     // remove _id field from data
     delete data._id;
-    const updatedItinerary = await itineraryService.updateItinerary(
-      req.params.id,
-      data
-    );
+    const updatedItinerary = await itineraryService.updateItinerary(req.params.id, data);
     if (!updatedItinerary) throw new NotFoundError('Itinerary not found');
-    res.sendSuccess(
-      removeMongoFields(updatedItinerary),
-      'Itinerary updated successfully'
-    );
+    res.sendSuccess(removeMongoFields(updatedItinerary), 'Itinerary updated successfully');
   } catch (error) {
     res.sendError(error);
   }
@@ -74,9 +56,7 @@ export const updateItinerary = async (req, res, next) => {
 
 export const deleteItinerary = async (req, res, next) => {
   try {
-    const deletedItinerary = await itineraryService.deleteItinerary(
-      req.params.id
-    );
+    const deletedItinerary = await itineraryService.deleteItinerary(req.params.id);
     if (!deletedItinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(null, 'Itinerary deleted successfully', 204);
   } catch (error) {
