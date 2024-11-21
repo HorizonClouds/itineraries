@@ -30,14 +30,7 @@ export const addActivity = async (req, res) => {
 
     return res.sendSuccess(newActivity, 'Activity added successfully', 201);
   } catch (error) {
-    console.log(error);
-    if (error.name === 'ValidationError') {
-      return res.sendError(new ValidationError('Validation failed', error.errors));
-    } else {
-      return res.sendError(
-        new ValidationError('An error occurred while adding the activity', [{ msg: error.message }])
-      );
-    }
+    next(error);
   }
 };
 
@@ -50,7 +43,7 @@ export const deleteActivity = async (req, res) => {
 
     return res.sendSuccess(null, 'Activity deleted successfully', 204);
   } catch (error) {
-    return res.sendError(error);
+    next(error);
   }
 };
 
@@ -61,6 +54,6 @@ export const getActivities = async (req, res) => {
 
     return res.sendSuccess(removeMongoFields(activities), 'Activities retrieved successfully');
   } catch (error) {
-    return res.sendError(error);
+    next(error);
   }
 };

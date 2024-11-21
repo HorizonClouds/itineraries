@@ -4,11 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const addActivity = async (itineraryId, activityData) => {
   // Buscar el itinerario por ID
-  const itinerary = await ItineraryModel.findById(itineraryId);
-  if (!itinerary) throw new NotFoundError('Itinerary not found');
-
+  let itinerary;
+  try {
+    itinerary = await ItineraryModel.findById(itineraryId);
+  } catch (error) {
+    throw new NotFoundError('Itinerary not found');
+  }
   // Comprobar si el itinerario tiene un destino
-  const destinationId = itinerary.destinationId;
+  const destinationId = itinerary?.destinationId;
   if (!destinationId) {
     throw new NotFoundError('Itinerary does not have an associated destination');
   }
@@ -35,20 +38,21 @@ export const addActivity = async (itineraryId, activityData) => {
 };
 
 export const deleteActivity = async (itineraryId, activityId) => {
+  let itinerary;
   try {
-    const itinerary = await ItineraryModel.findById(itineraryId);
+    itinerary = await ItineraryModel.findById(itineraryId);
     if (!itinerary) throw new NotFoundError('Itinerary not found');
-    console.log('itinerary', itinerary);
-    //remove activity if exists
+  } catch (error) {
+    throw new NotFoundError('Itinerary not found');
+  }
+
+  try {
     const activityIndex = itinerary.activities.findIndex((activity) => activity.id === activityId);
     if (activityIndex === -1) {
-      console.log('Not found, activityIndex:', activityIndex);
       throw new NotFoundError('Activity not found');
     }
     itinerary.activities.splice(activityIndex, 1);
-
     await itinerary.save();
-
     return itinerary.activities;
   } catch (error) {
     throw new BadRequestError('Error deleting activity', error);
@@ -56,8 +60,13 @@ export const deleteActivity = async (itineraryId, activityId) => {
 };
 
 export const getActivities = async (itineraryId) => {
-  const itinerary = await ItineraryModel.findById(itineraryId);
-  if (!itinerary) throw new NotFoundError('Itinerary not found');
+  let itinerary;
+  try {
+    itinerary = await ItineraryModel.findById(itineraryId);
+    if (!itinerary) throw new NotFoundError('Itinerary not found');
+  } catch (error) {
+    throw new NotFoundError('Itinerary not found');
+  }
   return itinerary.activities;
 };
 

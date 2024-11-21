@@ -18,7 +18,7 @@ export const getAllItineraries = async (req, res, next) => {
     const itineraries = await itineraryService.getAllItineraries();
     res.sendSuccess(removeMongoFields(itineraries));
   } catch (error) {
-    res.sendError(error);
+    next(error);
   }
 };
 
@@ -37,7 +37,7 @@ export const getItineraryById = async (req, res, next) => {
     if (!itinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(removeMongoFields(itinerary));
   } catch (error) {
-    res.sendError(error);
+    next(error);
   }
 };
 
@@ -50,7 +50,7 @@ export const updateItinerary = async (req, res, next) => {
     if (!updatedItinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(removeMongoFields(updatedItinerary), 'Itinerary updated successfully');
   } catch (error) {
-    res.sendError(error);
+    next(error);
   }
 };
 
@@ -60,6 +60,6 @@ export const deleteItinerary = async (req, res, next) => {
     if (!deletedItinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(null, 'Itinerary deleted successfully', 204);
   } catch (error) {
-    res.sendError(error);
+    next(error);
   }
 };
