@@ -2,61 +2,64 @@ import Itinerary from '../db/models/itineraryModel.js';
 import AppErrors from '../utils/customErrors.js';
 
 export const addReview = async (itineraryId, review) => {
-  const itinerary = await Itinerary.findById(itineraryId);
-  if (!itinerary) {
+  let itinerary;
+  try {
+    itinerary = await Itinerary.findById(itineraryId);
+  } catch (error) {
     throw new AppErrors.NotFoundError('Itinerary not found');
   }
-  review = { ...review, createdAt: new Date() , updatedAt: new Date() };
 
   const existingReview = itinerary.reviews.find((reviewN) => reviewN.userId.toString() === review.userId);
   if (existingReview) {
-    existingReview.score = review.score;
-  } else {
-    itinerary.reviews.push({ ...review, itineraryId });
-  }
-  let errors = itinerary.validateSync();
-  if (errors) {
-    throw new AppErrors.ValidationError('Invalid review data', errors.errors);
+    throw new AppErrors.ValidationError('User has already reviewed this itinerary');
   }
 
-  await itinerary.save();
-  return existingReview || review;
+  review = { ...review, createdAt: new Date(), updatedAt: new Date(), itineraryId };
+  itinerary.reviews.push(review);
+
+  try {
+    await itinerary.validate();
+    await itinerary.save();
+    return review;
+  } catch (error) {
+    throw new AppErrors.ValidationError('Review validation failed', error);
+  }
 };
 
 export const getReviews = async (itineraryId) => {
-  const itinerary = await Itinerary.findById(itineraryId);
-  if (!itinerary) {
+  try {
+    const itinerary = await Itinerary.findById(itineraryId);
+    return itinerary.reviews;
+  } catch (error) {
     throw new AppErrors.NotFoundError('Itinerary not found');
   }
-  return itinerary.reviews;
 };
 
 export const getAverageReview = async (itineraryId) => {
-  const itinerary = await Itinerary.findById(itineraryId);
-  if (!itinerary) {
+  try {
+    const itinerary = await Itinerary.findById(itineraryId);
+    const averageReview = itinerary.reviews.reduce((acc, review) => acc + review.score, 0) / itinerary.reviews.length;
+    return averageReview;
+  } catch (error) {
     throw new AppErrors.NotFoundError('Itinerary not found');
   }
-
-  const averageReview = itinerary.reviews.reduce((acc, review) => acc + review.score, 0) / itinerary.reviews.length;
-  return averageReview;
 };
 
 export const deleteReview = async (reviewId) => {
-  //it.reviews.id (reviewId)
-  const itinerary = await Itinerary.findOneAndUpdate(
-    { 'reviews.id': reviewId },
-    {
-      $pull: {
-        reviews: { id: reviewId },
+  try {
+    const itinerary = await Itinerary.findOneAndUpdate(
+      { 'reviews.id': reviewId },
+      {
+        $pull: {
+          reviews: { id: reviewId },
+        },
       },
-    },
-    { new: true }
-  );
-
-  if (!itinerary) {
+      { new: true }
+    );
+    return itinerary;
+  } catch (error) {
     throw new AppErrors.NotFoundError('Review not found');
   }
-  return itinerary;
 };
 
 export default {

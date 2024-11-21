@@ -1,5 +1,3 @@
-import e from 'express';
-
 export const stdOptions = {
   codes: {
     success: 200,
@@ -21,6 +19,7 @@ export const stdOptions = {
     unauthorized: 'UNAUTHORIZED',
     forbidden: 'FORBIDDEN',
     internalServerError: 'INTERNAL_SERVER_ERROR',
+    badJson: 'BAD_JSON',
   },
   status: {
     success: 'success', // 2xx
@@ -49,13 +48,17 @@ export function sendSuccess(
 export function sendError(res, error) {
   let statusCode = error.statusCode;
   let message = error.message;
-  let details = error;
+  let details = error.details || { ...error };
   let appCode = error.appCode;
 
   if (!appCode) {
     // If the error object does not have an appCode its an unknown error
     appCode = stdOptions.appCodes.unknownError;
     statusCode = stdOptions.codes.internalServerError;
+  } else {
+    // remove status and app code from details if they exist
+    delete details.statusCode;
+    delete details.appCode;
   }
   res.status(statusCode).json({
     status: statusCode < 500 ? 'failed' : 'error',

@@ -46,6 +46,25 @@ export class ForbiddenError extends Error {
   }
 }
 
+export class InternalServerError extends Error {
+  constructor(message = 'Internal server error', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.internalServerError;
+    this.statusCode = stdOptions.codes.internalServerError;
+  }
+}
+
+//bad json
+
+export class BadJsonError extends Error {
+  constructor(message = 'Bad JSON', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.badJson;
+    this.statusCode = stdOptions.codes.badRequest;
+  }
+}
 export default {
   NotFoundError,
   BadRequestError,

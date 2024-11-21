@@ -14,5 +14,4 @@ router.get('/v1/itineraries/:itineraryId/reviews', getReviews);
 router.get('/v1/itineraries/:itineraryId/average-reviews-score', getAverageScore);
 router.delete('/v1/reviews/:reviewId', deleteReview);
 
-
 export default router;
