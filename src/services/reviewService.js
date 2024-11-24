@@ -48,10 +48,10 @@ export const getAverageReview = async (itineraryId) => {
 export const deleteReview = async (reviewId) => {
   try {
     const itinerary = await Itinerary.findOneAndUpdate(
-      { 'reviews.id': reviewId },
+      { 'reviews._id': reviewId },
       {
         $pull: {
-          reviews: { id: reviewId },
+          reviews: { _id: reviewId },
         },
       },
       { new: true }

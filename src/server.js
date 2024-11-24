@@ -9,6 +9,7 @@ import reviewRouter from './routes/reviewRoute.js';
 import connectDB from './db/connection.js';
 import errorHandler from './middlewares/errorHandler.js';
 import { BadJsonError } from './utils/customErrors.js';
+import commentRouter from './routes/commentRoute.js';
 
 dotenv.config(); // Load environment variables
 
@@ -28,6 +29,7 @@ app.use(standardizedResponse); // Use custom response middleware
 // Routes
 app.use('/api', itineraryRouter); // Use API routes
 app.use('/api', reviewRouter); // Use review routes
+app.use('/api', commentRouter); // Use comment routes
 
 app.get('/', (req, res) => {
   // Redirect to API documentation

@@ -1,18 +1,19 @@
 [
     {
-        "id": "iti-1",
-        "userId": "usr-1",
+        "_id": "100000000000000000000001",
+        "userId": "000000000000000000000001",
         "name": "Trip to the beach",
         "description": "A trip to the beach with friends",
         "startDate": "2022-12-01T00:00:00.000Z",
         "endDate": "2022-12-05T00:00:00.000Z",
         "createdAt": "2022-12-01T00:00:00.000Z",
         "updatedAt": "2022-12-01T00:00:00.000Z",
-        "destinationId": 1,
+        "destinationId": "200000000000000000000001",
         "activities": [
             {
-                "id": "act-1",
-                "itineraryId": "iti-1",
+                "_id": "110000000000000000000001",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000001",
                 "name": "Surfing",
                 "description": "Surfing at the beach",
                 "startDate": "2022-12-02T00:00:00.000Z",
@@ -26,8 +27,9 @@
                 }
             },
             {
-                "id": "act-2",
-                "itineraryId": "iti-1",
+                "_id": "110000000000000000000002",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000001",
                 "name": "Dinner",
                 "description": "Dinner at the beach",
                 "startDate": "2022-12-02T00:00:00.000Z",
@@ -43,18 +45,18 @@
         ],
         "comments": [
             {
-                "id": "com-1",
-                "itineraryId": "iti-1",
-                "userId": "usr-2",
+                "_id": "120000000000000000000001",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000002",
                 "title": "Great experience",
                 "message": "It's a great experience to be at the beach!",
                 "createdAt": "2022-12-01T00:00:00.000Z",
                 "updatedAt": "2022-12-01T00:00:00.000Z"
             },
             {
-                "id": "com-2",
-                "itineraryId": "iti-1",
-                "userId": "usr-3",
+                "_id": "120000000000000000000002",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000003",
                 "title": "Memorable trip",
                 "message": "I had a great time with my friends!",
                 "createdAt": "2022-12-01T00:00:00.000Z",
@@ -64,9 +66,9 @@
         ],
         "reviews": [
             {
-                "id": "rev-1",
-                "itineraryId": "iti-1",
-                "userId": "usr-2",
+                "_id": "130000000000000000000001",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000002",
                 "score": 9,
                 "title": "Great experience",
                 "message": "I loved the experience!",

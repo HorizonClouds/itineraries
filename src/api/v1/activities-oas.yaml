@@ -16,39 +16,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Surfing
-                description:
-                  type: string
-                  example: Surfing at the beach
-                startDate:
-                  type: string
-                  format: date-time
-                  example: "2022-12-02T00:00:00.000Z"
-                endDate:
-                  type: string
-                  format: date-time
-                  example: "2022-12-02T00:00:00.000Z"
-                location:
-                  type: object
-                  properties:
-                    latitude:
-                      type: number
-                      example: 37.7749
-                    longitude:
-                      type: number
-                      example: -122.4194
-                    address:
-                      type: string
-                      example: Fuengirola Beach
-              required:
-                - name
-                - description
-                - startDate
-                - endDate
+              $ref: "#/components/schemas/ActivityPost"
       responses:
         "201":
           description: Activity added successfully
@@ -64,7 +32,7 @@ paths:
                     type: string
                     example: Activity added successfully
                   data:
-                    $ref: "#/components/schemas/Activity"
+                    $ref: "#/components/schemas/ActivityGet"
                   appCode:
                     type: string
                     example: OK
@@ -99,7 +67,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Activity"
+                      $ref: "#/components/schemas/ActivityGet"
                   appCode:
                     type: string
                     example: OK
@@ -125,19 +93,12 @@ paths:
                   timestamp:
                     type: string
                     example: "2023-10-01T12:00:00.000Z"
-
-  /v1/itineraries/{itineraryId}/activities/{activityId}:
+  /v1/activities/{activityId}:
     delete:
-      summary: Delete an activity from an itinerary
+      summary: Delete an activity
       tags:
         - Activities
       parameters:
-        - in: path
-          name: itineraryId
-          required: true
-          description: ID of the itinerary
-          schema:
-            type: string
         - in: path
           name: activityId
           required: true
@@ -148,7 +109,7 @@ paths:
         "204":
           description: Activity deleted successfully
         "404":
-          description: Activity or itinerary not found
+          description: Activity not found
           content:
             application/json:
               schema:
@@ -159,19 +120,21 @@ paths:
                     example: error
                   message:
                     type: string
-                    example: Activity or itinerary not found
+                    example: Activity not found
                   appCode:
                     type: string
-                    example: UNKNOWN_ERROR
+                    example: NOT_FOUND
                   timestamp:
                     type: string
                     example: "2023-10-01T12:00:00.000Z"
 
 components:
   schemas:
-    Activity:
+    ActivityGet:
       type: object
       properties:
+        _id:
+          type: string
         name:
           type: string
         description:
@@ -191,3 +154,46 @@ components:
               type: number
             address:
               type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ActivityPost:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "AA0000000000000000000000"
+        name:
+          type: string
+          example: Surfing
+        description:
+          type: string
+          example: Surfing at the beach
+        startDate:
+          type: string
+          format: date-time
+          example: "2022-12-02T00:00:00.000Z"
+        endDate:
+          type: string
+          format: date-time
+          example: "2022-12-02T00:00:00.000Z"
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+              example: 37.7749
+            longitude:
+              type: number
+              example: -122.4194
+            address:
+              type: string
+              example: Fuengirola Beach
+      required:
+        - name
+        - description
+        - startDate
+        - endDate

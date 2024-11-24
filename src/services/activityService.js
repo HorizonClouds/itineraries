@@ -1,6 +1,5 @@
 import ItineraryModel from '../db/models/itineraryModel.js';
-import { NotFoundError, BadRequestError } from '../utils/customErrors.js';
-import { v4 as uuidv4 } from 'uuid';
+import { NotFoundError, BadRequestError, ValidationError } from '../utils/customErrors.js';
 
 export const addActivity = async (itineraryId, activityData) => {
   // Buscar el itinerario por ID
@@ -24,30 +23,34 @@ export const addActivity = async (itineraryId, activityData) => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  newActivity.id = uuidv4();
 
   // itinerary.validateActivity(newActivity);
   // Agregar la actividad al itinerario
   itinerary.activities.push(newActivity);
-
-  // Guardar el itinerario actualizado
-  await itinerary.save();
+  let resultItinerary;
+  try {
+    await itinerary.validate();
+    // Guardar el itinerario actualizado
+    resultItinerary = await itinerary.save();
+  } catch (error) {
+    throw new ValidationError('Error validating itinerary', error);
+  }
 
   // Retornar la nueva actividad
-  return newActivity;
+  return resultItinerary.activities[resultItinerary.activities.length - 1];
 };
 
-export const deleteActivity = async (itineraryId, activityId) => {
+export const deleteActivity = async (activityId) => {
   let itinerary;
   try {
-    itinerary = await ItineraryModel.findById(itineraryId);
-    if (!itinerary) throw new NotFoundError('Itinerary not found');
+    itinerary = await ItineraryModel.findOne({ 'activities._id': activityId });
+    if (!itinerary) throw new NotFoundError('Activity not found');
   } catch (error) {
-    throw new NotFoundError('Itinerary not found');
+    throw new NotFoundError('Activity not found');
   }
 
   try {
-    const activityIndex = itinerary.activities.findIndex((activity) => activity.id === activityId);
+    const activityIndex = itinerary.activities.findIndex((activity) => activity._id.toString() === activityId);
     if (activityIndex === -1) {
       throw new NotFoundError('Activity not found');
     }

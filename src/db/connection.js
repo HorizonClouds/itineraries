@@ -18,6 +18,8 @@ const connectDB = async () => {
     //timeout 3 seconds
     await mongoose.connect(mongoURI, { connectTimeoutMS: 3000, serverSelectionTimeoutMS: 5000 });
     console.log(`Connected to MongoDB in ${process.env.NODE_ENV === 'test' ? 'test (in-memory)' : 'default'} mode`);
+    //Delete all data in the database when connect (dev purposes)
+    // await mongoose.connection.db.dropDatabase();
   } catch (error) {
     console.error('Initial connection failed, retrying with in-memory MongoDB.', error.message);
     if (!mongod) {
