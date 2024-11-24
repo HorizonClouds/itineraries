@@ -2,7 +2,6 @@ import reviewsService from '../services/reviewService.js';
 
 export const addReview = async (req, res, next) => {
   const { itineraryId } = req.params;
-  console.log(itineraryId);
   const review = req.body;
 
   try {

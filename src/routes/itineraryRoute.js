@@ -18,7 +18,7 @@ router.delete('/v1/itineraries/:id', itineraryController.deleteItinerary);
 
 router.post('/v1/itineraries/:itineraryId/activities', validateActivity, activityController.addActivity);
 
-router.delete('/v1/itineraries/:itineraryId/activities/:activityId', activityController.deleteActivity);
+router.delete('/v1/activities/:activityId', activityController.deleteActivity);
 router.get('/v1/itineraries/:itineraryId/activities', activityController.getActivities);
 
 export default router;

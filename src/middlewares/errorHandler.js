@@ -3,10 +3,7 @@
 import { sendError } from '../utils/standardResponse.js';
 
 const errorHandler = (error, req, res, next) => {
-  if (process.env.NODE_ENV !== 'test') {
-    console.log('Error handler middleware');
-    console.error(error.message);
-  }
+  console.log(error);
   sendError(res, error);
 };
 

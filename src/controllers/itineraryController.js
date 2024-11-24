@@ -33,6 +33,8 @@ export const createItinerary = async (req, res, next) => {
 
 export const getItineraryById = async (req, res, next) => {
   try {
+    console.log('aaaaaa');
+    console.log(req.params.id);
     const itinerary = await itineraryService.getItineraryById(req.params.id);
     if (!itinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(removeMongoFields(itinerary));
@@ -44,8 +46,6 @@ export const getItineraryById = async (req, res, next) => {
 export const updateItinerary = async (req, res, next) => {
   try {
     let data = req.body;
-    // remove _id field from data
-    delete data._id;
     const updatedItinerary = await itineraryService.updateItinerary(req.params.id, data);
     if (!updatedItinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(removeMongoFields(updatedItinerary), 'Itinerary updated successfully');

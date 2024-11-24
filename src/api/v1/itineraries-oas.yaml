@@ -7,6 +7,38 @@ servers:
   - url: http://localhost:3000/api/
 paths:
   /v1/itineraries:
+    post:
+        summary: Create a new itinerary
+        tags:
+          - Itinerary
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewItinerary"
+        responses:
+          "201":
+            description: The created itinerary
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      example: success
+                    message:
+                      type: string
+                      example: Itinerary created successfully
+                    data:
+                      $ref: "#/components/schemas/Itinerary"
+                    appCode:
+                      type: string
+                      example: OK
+                    timestamp:
+                      type: string
+                      example: "2023-10-01T12:00:00.000Z"
     get:
       summary: Get all itineraries
       tags:
@@ -35,46 +67,14 @@ paths:
                   timestamp:
                     type: string
                     example: "2023-10-01T12:00:00.000Z"
-    post:
-      summary: Create a new itinerary
-      tags:
-        - Itinerary
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/NewItinerary"
-      responses:
-        "201":
-          description: The created itinerary
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: success
-                  message:
-                    type: string
-                    example: Itinerary created successfully
-                  data:
-                    $ref: "#/components/schemas/Itinerary"
-                  appCode:
-                    type: string
-                    example: OK
-                  timestamp:
-                    type: string
-                    example: "2023-10-01T12:00:00.000Z"
-  /v1/itineraries/{id}:
+  /v1/itineraries/{itineraryId}:
     get:
       summary: Get a specific itinerary by ID
       tags:
         - Itinerary
       parameters:
         - in: path
-          name: id
+          name: itineraryId
           required: true
           description: ID of the itinerary to get
           schema:
@@ -126,7 +126,7 @@ paths:
         - Itinerary
       parameters:
         - in: path
-          name: id
+          name: itineraryId
           required: true
           description: ID of the itinerary to update
           schema:
@@ -136,7 +136,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Itinerary"
+              $ref: "#/components/schemas/UpdateItinerary"
       responses:
         "200":
           description: The updated itinerary
@@ -184,7 +184,7 @@ paths:
         - Itinerary
       parameters:
         - in: path
-          name: id
+          name: itineraryId
           required: true
           description: ID of the itinerary to delete
           schema:
@@ -282,6 +282,33 @@ components:
         destinationId:
           type: string
           example: "des-1"
+      required:
+        - name
+        - description
+        - startDate
+        - endDate
+        - destinationId
+    UpdateItinerary:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Itinerary Name
+        description:
+          type: string
+          example: A trip to the beach with friends
+        startDate:
+          type: string
+          format: date-time
+          example: "2022-12-01T00:00:00.000Z"
+        endDate:
+          type: string
+          format: date-time
+          example: "2022-12-05T00:00:00.000Z"
+        destinationId:
+          type: string
+          example: "des-1"
+        
       required:
         - name
         - description

@@ -14,7 +14,7 @@ const removeMongoFields = (data) => {
   }
 };
 
-export const addActivity = async (req, res) => {
+export const addActivity = async (req, res, next) => {
   try {
     const { itineraryId } = req.params;
     const activityData = req.body;
@@ -34,10 +34,10 @@ export const addActivity = async (req, res) => {
   }
 };
 
-export const deleteActivity = async (req, res) => {
+export const deleteActivity = async (req, res, next) => {
   try {
-    const { itineraryId, activityId } = req.params;
-    const deletedActivity = await activityService.deleteActivity(itineraryId, activityId);
+    const { activityId } = req.params;
+    const deletedActivity = await activityService.deleteActivity(activityId);
 
     if (!deletedActivity) throw new NotFoundError('Activity not found');
 
@@ -47,7 +47,7 @@ export const deleteActivity = async (req, res) => {
   }
 };
 
-export const getActivities = async (req, res) => {
+export const getActivities = async (req, res, next) => {
   try {
     const { itineraryId } = req.params;
     const activities = await activityService.getActivities(itineraryId);

@@ -14,33 +14,15 @@ export const itinerarySchema = new mongoose.Schema({
     minlength: [3, 'Name must be at least 3 characters long'],
     maxlength: [50, 'Name must be at most 50 characters long'],
   },
-  description: {
-    type: String,
-    required: [true, 'Description is required'],
-  },
-  startDate: {
-    type: Date,
-    required: [true, 'Start date is required'],
-  },
-  endDate: {
-    type: Date,
-    required: [true, 'End date is required'],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  destinationId: {
-    type: String,
-    required: [true, 'Destination ID is required'],
-  },
+  description: { type: String, required: [true, 'Description is required'] },
+  startDate: { type: Date, required: [true, 'Start date is required'] },
+  endDate: { type: Date, required: [true, 'End date is required'] },
+  destinationId: { type: String, required: [true, 'Destination ID is required'] },
   activities: [activitySchema],
   comments: [commentSchema],
   reviews: [reviewSchema],
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
 // Create the model from the schema
