@@ -3,7 +3,7 @@
 import { sendError } from '../utils/standardResponse.js';
 
 const errorHandler = (error, req, res, next) => {
-  console.log(error);
+  logger.info(error);
   sendError(res, error);
 };
 

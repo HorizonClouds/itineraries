@@ -5,7 +5,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 dotenv.config();
 
 const connectDB = async () => {
-  console.log('Connecting to MongoDB...');
+  logger.info('Connecting to MongoDB...');
   let mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/microservice';
   let mongod;
 
@@ -17,7 +17,7 @@ const connectDB = async () => {
   try {
     //timeout 3 seconds
     await mongoose.connect(mongoURI, { connectTimeoutMS: 3000, serverSelectionTimeoutMS: 5000 });
-    console.log(`Connected to MongoDB in ${process.env.NODE_ENV === 'test' ? 'test (in-memory)' : 'default'} mode`);
+    logger.info(`Connected to MongoDB in ${process.env.NODE_ENV === 'test' ? 'test (in-memory)' : 'default'} mode`);
     //Delete all data in the database when connect (dev purposes)
     // await mongoose.connection.db.dropDatabase();
   } catch (error) {
@@ -28,7 +28,7 @@ const connectDB = async () => {
     }
     try {
       await mongoose.connect(mongoURI);
-      console.log('Connected to in-memory MongoDB after initial failure');
+      logger.info('Connected to in-memory MongoDB after initial failure');
     } catch (err) {
       console.error('Failed to connect to in-memory MongoDB', err);
     }

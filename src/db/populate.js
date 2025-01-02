@@ -1,5 +1,6 @@
 //Populate the database with some data, using db/connection.js to connect to the database.
 import connectDB from './connection.js';
+import '../utils/logger.js';
 import fs from 'fs';
 import ItineraryModel from './models/itineraryModel.js';
 
@@ -10,7 +11,7 @@ const populate = async () => {
 
   const itineraries = JSON.parse(fs.readFileSync(filesPath + 'itineraries.json', 'utf-8'));
   await ItineraryModel.insertMany(itineraries);
-  console.log('Itineraries populated');
+  logger.info('Itineraries populated');
   process.exit();
 };
 populate();

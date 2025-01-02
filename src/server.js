@@ -1,5 +1,6 @@
 // server.js
-
+import config from './config.js';
+import './utils/logger.js';
 import express from 'express'; // Import Express framework
 import { swaggerSetup } from './swagger.js'; // Import Swagger setup
 import itineraryRouter from './routes/itineraryRoute.js'; // Import API routes
@@ -14,7 +15,7 @@ import commentRouter from './routes/commentRoute.js';
 dotenv.config(); // Load environment variables
 
 const app = express(); // Create an Express application
-const port = process.env.BACKEND_PORT || 3000; // Define port
+const port = config.backendPort;
 
 // Middlewares
 app.use(express.json()); // Parse JSON bodies
@@ -43,12 +44,13 @@ swaggerSetup(app);
 connectDB()
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
-      console.log(`API documentation is available at http://localhost:${port}/api-docs`);
+      logger.info(`Server is running on http://localhost:${port}`);
+      logger.info(`API documentation is available at http://localhost:${port}/api-docs`);
+      logger.debug(`Debug logs are enabled`);
     });
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error.message);
+    logger.info('Error connecting to MongoDB:' + error.message);
   });
 
 export default app; // Export the Express application
