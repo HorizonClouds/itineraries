@@ -36,12 +36,6 @@ export const validateItinerary = [
     .isISO8601()
     .withMessage('End date must be a valid date'),
 
-  // Validate 'destinationId' field
-  body('destinationId')
-    .exists({ checkNull: true })
-    .withMessage('Destination ID is required')
-    .withMessage('Destination ID must be a number'),
-
   // Middleware to handle validation errors
   (req, res, next) => {
     const errors = validationResult(req);

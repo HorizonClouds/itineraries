@@ -12,7 +12,6 @@ const exampleItinerary = {
     description: 'Test Description',
     startDate: new Date(),
     endDate: new Date() + 10 * 24 * 60 * 60 * 1000,
-    destinationId: 'destination1',
     activities: [],
     comments: [],
     reviews: []

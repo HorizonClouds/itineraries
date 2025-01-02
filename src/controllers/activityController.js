@@ -19,13 +19,6 @@ export const addActivity = async (req, res, next) => {
     const { itineraryId } = req.params;
     const activityData = req.body;
 
-    //buscar el destino por itinerario
-    if (!activityData.destinationId) {
-      const itinerary = await itineraryService.getItineraryById(itineraryId);
-      if (!itinerary) throw new NotFoundError('Itinerary not found');
-      activityData.destinationId = itinerary.destinationId;
-    }
-
     const newActivity = await activityService.addActivity(itineraryId, activityData);
 
     return res.sendSuccess(newActivity, 'Activity added successfully', 201);

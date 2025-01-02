@@ -17,7 +17,6 @@ export const itinerarySchema = new mongoose.Schema({
   description: { type: String, required: [true, 'Description is required'] },
   startDate: { type: Date, required: [true, 'Start date is required'] },
   endDate: { type: Date, required: [true, 'End date is required'] },
-  destinationId: { type: String, required: [true, 'Destination ID is required'] },
   activities: [activitySchema],
   comments: [commentSchema],
   reviews: [reviewSchema],

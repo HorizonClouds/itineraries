@@ -241,9 +241,6 @@ components:
           type: string
           format: date-time
           example: "2022-12-01T00:00:00.000Z"
-        destinationId:
-          type: string
-          example: "des-1"
         activities:
           type: array
           items:
@@ -261,7 +258,6 @@ components:
         - description
         - startDate
         - endDate
-        - destinationId
     NewItinerary:
       type: object
       properties:
@@ -279,15 +275,11 @@ components:
           type: string
           format: date-time
           example: "2022-12-05T00:00:00.000Z"
-        destinationId:
-          type: string
-          example: "des-1"
       required:
         - name
         - description
         - startDate
         - endDate
-        - destinationId
     UpdateItinerary:
       type: object
       properties:
@@ -305,13 +297,9 @@ components:
           type: string
           format: date-time
           example: "2022-12-05T00:00:00.000Z"
-        destinationId:
-          type: string
-          example: "des-1"
         
       required:
         - name
         - description
         - startDate
         - endDate
-        - destinationId

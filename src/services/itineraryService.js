@@ -43,7 +43,6 @@ export const updateItinerary = async (id, data) => {
           description: data.description || originalItinerary.description,
           startDate: data.startDate || originalItinerary.startDate,
           endDate: data.endDate || originalItinerary.endDate,
-          destinationId: data.destinationId || originalItinerary.destinationId,
           updatedAt: Date.now(),
         },
       },

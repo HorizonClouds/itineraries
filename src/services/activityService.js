@@ -9,17 +9,12 @@ export const addActivity = async (itineraryId, activityData) => {
   } catch (error) {
     throw new NotFoundError('Itinerary not found');
   }
-  // Comprobar si el itinerario tiene un destino
-  const destinationId = itinerary?.destinationId;
-  if (!destinationId) {
-    throw new NotFoundError('Itinerary does not have an associated destination');
-  }
 
-  // Crear el nuevo objeto de actividad, asignando el destinationId del itinerario
+
+  // Crear el nuevo objeto de actividad
   const newActivity = {
     ...activityData,
     itineraryId: itinerary._id?.toString(), // Usar el _id del itinerario, no convertir a int
-    destinationId: destinationId.toString(), // Asociamos el destinationId del itinerario
     createdAt: new Date(),
     updatedAt: new Date(),
   };
