@@ -1,6 +1,5 @@
 import activityService from '../services/activityService.js';
 import { NotFoundError, ValidationError } from '../utils/customErrors.js';
-import itineraryService from '../services/itineraryService.js';
 
 const removeMongoFields = (data) => {
   if (Array.isArray(data)) {

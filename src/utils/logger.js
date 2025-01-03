@@ -2,22 +2,27 @@ import config from '../config.js';
 
 const CLIENT_ID = config.kafkaServiceName
 const logLevel = config.logLevel;
-const kafkaEnabled = config.kafkaEnabled;
+let kafkaEnabled = config.kafkaEnabled;
 let kafkaBroker, kafkaTopic, kafka, producer;
 
 if (kafkaEnabled) {
-  process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
-  const { Kafka, Partitioners } = await import('kafkajs');
-  kafkaBroker = config.kafkaBroker;
-  kafkaTopic = config.kafkaTopic;
-  kafka = new Kafka({ clientId: CLIENT_ID, brokers: [kafkaBroker], createPartitioner: Partitioners.LegacyPartitioner });
-  producer = kafka.producer();
-  
-  const connectKafka = async () => {
-    await producer.connect();
-  };
-  
-  await connectKafka();
+  try {
+    process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1;
+    const { Kafka, Partitioners } = await import('kafkajs');
+    kafkaBroker = config.kafkaBroker;
+    kafkaTopic = config.kafkaTopic;
+    kafka = new Kafka({ clientId: CLIENT_ID, brokers: [kafkaBroker], createPartitioner: Partitioners.LegacyPartitioner });
+    producer = kafka.producer();
+
+    const connectKafka = async () => {
+      await producer.connect();
+    };
+
+    await connectKafka();
+  } catch (error) {
+    console.error(`Failed to initialize Kafka: ${error.message}`);
+    kafkaEnabled = false;
+  }
 }
 
 console.log(`Logger initialized for ${CLIENT_ID}; with variables: logLevel=${logLevel}, kafkaEnabled=${kafkaEnabled}, kafkaBroker=${kafkaBroker}, kafkaTopic=${kafkaTopic}`);

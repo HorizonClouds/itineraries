@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import config from '../config.js';
 
 dotenv.config();
 
 const connectDB = async () => {
   logger.info('Connecting to MongoDB...');
-  let mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/microservice';
+  let mongoURI = config.mongoURI;
   let mongod;
 
   if (process.env.NODE_ENV === 'test') {
