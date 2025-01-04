@@ -244,7 +244,7 @@ components:
         activities:
           type: array
           items:
-            $ref: "#/components/schemas/Activity" # Defined in activities.yaml merged by code
+            $ref: "#/components/schemas/ActivityGet" # Defined in activities.yaml merged by code
         comments:
           type: array
           items:

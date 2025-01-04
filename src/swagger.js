@@ -14,8 +14,26 @@ const options = {
     },
     servers: [
       {
+        url: '/api/v1/itineraries/api/',
+        description: 'Api Gateway server',
+      },
+      {
         url: '/api/',
         description: 'Development server',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },

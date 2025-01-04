@@ -17,6 +17,7 @@ export const addActivity = async (req, res, next) => {
   try {
     const { itineraryId } = req.params;
     const activityData = req.body;
+    activityData.userId = req.user.id;
 
     const newActivity = await activityService.addActivity(itineraryId, activityData);
 

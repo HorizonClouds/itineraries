@@ -3,6 +3,7 @@ import reviewsService from '../services/reviewService.js';
 export const addReview = async (req, res, next) => {
   const { itineraryId } = req.params;
   const review = req.body;
+  review.userId = req.user.id;
 
   try {
     const itinerary = await reviewsService.addReview(itineraryId, review);

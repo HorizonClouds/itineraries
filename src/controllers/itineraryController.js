@@ -24,7 +24,9 @@ export const getAllItineraries = async (req, res, next) => {
 
 export const createItinerary = async (req, res, next) => {
   try {
-    const newItinerary = await itineraryService.createItinerary(req.body);
+    let data = req.body;
+    data.userId = req.user.id;
+    const newItinerary = await itineraryService.createItinerary(data);
     res.sendSuccess(removeMongoFields(newItinerary), 'Itinerary created successfully', 201);
   } catch (error) {
     next(error);
@@ -33,7 +35,6 @@ export const createItinerary = async (req, res, next) => {
 
 export const getItineraryById = async (req, res, next) => {
   try {
-    console.log('aaaaaa');
     console.log(req.params.id);
     const itinerary = await itineraryService.getItineraryById(req.params.id);
     if (!itinerary) throw new NotFoundError('Itinerary not found');

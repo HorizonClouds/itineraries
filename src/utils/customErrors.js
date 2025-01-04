@@ -71,4 +71,5 @@ export default {
   ValidationError,
   UnauthorizedError,
   ForbiddenError,
+  BadJsonError,
 };

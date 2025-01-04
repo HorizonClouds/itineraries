@@ -8,7 +8,7 @@ export default {
   backendPort: parseInt(process.env.BACKEND_PORT, 10) || 6401,
   mongoURI: process.env.MONGODB_URI || 'mongodb://localhost:6402/itineraries',
   // JWT configuration
-  jwtSecret: process.env.JWT_SECRET || 'meteo-secret',
+  jwtSecret: process.env.JWT_SECRET || 'horizon-secret',
   jwtServiceName: process.env.JWT_SERVICE_NAME || 'itineraries-service',
   // Kafka configuration
   kafkaEnabled: process.env.KAFKA_ENABLED === 'true',
