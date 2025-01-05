@@ -36,6 +36,12 @@ export const validateItinerary = [
     .isISO8601()
     .withMessage('End date must be a valid date'),
 
+  // Validate 'category' field
+  body('category')
+    .optional()
+    .isString()
+    .withMessage('Category must be a string'),
+
   // Middleware to handle validation errors
   (req, res, next) => {
     const errors = validationResult(req);

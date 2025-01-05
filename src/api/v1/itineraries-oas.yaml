@@ -253,6 +253,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Review" # Defined in reviews.yaml merged by code
+        category:
+          type: string
+          example: "RELAX"
       required:
         - name
         - description
@@ -275,6 +278,9 @@ components:
           type: string
           format: date-time
           example: "2022-12-05T00:00:00.000Z"
+        category:
+          type: string
+          example: "RELAX"
       required:
         - name
         - description
@@ -297,7 +303,9 @@ components:
           type: string
           format: date-time
           example: "2022-12-05T00:00:00.000Z"
-        
+        category:
+          type: string
+          example: "RELAX"
       required:
         - name
         - description

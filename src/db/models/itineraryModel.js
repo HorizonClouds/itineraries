@@ -20,6 +20,10 @@ export const itinerarySchema = new mongoose.Schema({
   activities: [activitySchema],
   comments: [commentSchema],
   reviews: [reviewSchema],
+  category: {
+    type: String,
+    required: false,
+  },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
