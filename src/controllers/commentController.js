@@ -6,7 +6,7 @@ export const createComment = async (req, res, next) => {
   comment.itineraryId = itineraryId;
 
   try {
-    comment.userId = req.user.id;
+    comment.userId = req.user.userId;
     const savedComment = await commentService.createComment(comment);
     res.sendSuccess(savedComment, 'Comment added', 201);
   } catch (error) {

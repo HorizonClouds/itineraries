@@ -14,12 +14,12 @@ const options = {
     },
     servers: [
       {
-        url: '/api/v1/itineraries/api/',
-        description: 'Api Gateway server',
-      },
-      {
         url: '/api/',
         description: 'Development server',
+      },
+      {
+        url: '/api/v1/itineraries/api/',
+        description: 'Api Gateway server',
       },
     ],
     components: {

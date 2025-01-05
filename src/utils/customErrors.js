@@ -65,6 +65,16 @@ export class BadJsonError extends Error {
     this.statusCode = stdOptions.codes.badRequest;
   }
 }
+
+export class MeteoServiceError extends Error {
+  constructor(message = 'Error in Meteo Service', details) {
+    super(message);
+    this.details = details;
+    this.appCode = stdOptions.appCodes.internalServerError;
+    this.statusCode = stdOptions.codes.internalServerError;
+  }
+}
+
 export default {
   NotFoundError,
   BadRequestError,

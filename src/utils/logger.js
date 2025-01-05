@@ -56,5 +56,19 @@ const debug = async (message) => {
     await sendLogToKafka(formattedMessage);
   }
 };
-export let logger = { info, debug };
+
+const error = async (message) => {
+  const formattedMessage = logMessage('ERROR', message);
+  console.error(formattedMessage);
+  await sendLogToKafka(formattedMessage);
+};
+
+const warn = async (message) => {
+  const formattedMessage = logMessage('WARN', message);
+  console.warn(formattedMessage);
+  await sendLogToKafka(formattedMessage);
+};
+export let logger = { info, debug , error, warn };
 global.logger = logger;
+
+export default logger;

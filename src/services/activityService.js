@@ -10,7 +10,6 @@ export const addActivity = async (itineraryId, activityData) => {
     throw new NotFoundError('Itinerary not found');
   }
 
-
   // Crear el nuevo objeto de actividad
   const newActivity = {
     ...activityData,
@@ -68,4 +67,19 @@ export const getActivities = async (itineraryId) => {
   return itinerary.activities;
 };
 
-export default { addActivity, deleteActivity, getActivities };
+export const getActivityById = async (activityId) => {
+  let itinerary;
+  try {
+    itinerary = await ItineraryModel.findOne({ 'activities._id': activityId });
+    if (!itinerary) throw new NotFoundError('Activity not found');
+  } catch (error) {
+    throw new NotFoundError('Activity not found');
+  }
+
+  const activity = itinerary.activities.id(activityId);
+  if (!activity) throw new NotFoundError('Activity not found');
+
+  return activity;
+};
+
+export default { addActivity, deleteActivity, getActivities, getActivityById };

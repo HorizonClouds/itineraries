@@ -25,7 +25,7 @@ export const getAllItineraries = async (req, res, next) => {
 export const createItinerary = async (req, res, next) => {
   try {
     let data = req.body;
-    data.userId = req.user.id;
+    data.userId = req.user.userId;
     const newItinerary = await itineraryService.createItinerary(data);
     res.sendSuccess(removeMongoFields(newItinerary), 'Itinerary created successfully', 201);
   } catch (error) {
