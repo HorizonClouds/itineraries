@@ -28,17 +28,22 @@ export const validateActivity = [
     .isISO8601()
     .withMessage('End date must be a valid date'),
 
+  //check startDate is before endDate; send the same erro syntax as the other fields
+  body()
+    .custom((value, { req }) => {
+      if (new Date(req.body.startDate) > new Date(req.body.endDate)) {
+        throw new Error('Start date must be before end date');
+      }
+      return true;
+    }),
+
+
   // Middleware to handle validation errors
   (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        throw new ValidationError('Validation failed', errors.array());
-      }
-      next();
-    } catch (error) {
-      res.sendError(new ValidationError('An error occurred while validating', [error]));
-      return;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      next(new ValidationError('An error occurred while validating the itinerary', errors.array()));
     }
+    next();
   },
 ];

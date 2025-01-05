@@ -93,18 +93,24 @@ paths:
                   timestamp:
                     type: string
                     example: "2023-10-01T12:00:00.000Z"
-  /v1/activities/{activityId}:
+  /v1/itineraries/{itineraryId}/activities/{activityIndex}:
     get:
-      summary: Get an activity by ID
+      summary: Get an activity by index
       tags:
         - Activities
       parameters:
         - in: path
-          name: activityId
+          name: itineraryId
           required: true
-          description: ID of the activity
+          description: ID of the itinerary
           schema:
             type: string
+        - in: path
+          name: activityIndex
+          required: true
+          description: Index of the activity
+          schema:
+            type: integer
       responses:
         '200':
           description: Successful response
@@ -147,16 +153,22 @@ paths:
                     type: string
                     example: "2023-10-01T12:00:00.000Z"
     delete:
-      summary: Delete an activity
+      summary: Delete an activity by index
       tags:
         - Activities
       parameters:
         - in: path
-          name: activityId
+          name: itineraryId
           required: true
-          description: ID of the activity
+          description: ID of the itinerary
           schema:
             type: string
+        - in: path
+          name: activityIndex
+          required: true
+          description: Index of the activity
+          schema:
+            type: integer
       responses:
         "204":
           description: Activity deleted successfully
@@ -179,18 +191,24 @@ paths:
                   timestamp:
                     type: string
                     example: "2023-10-01T12:00:00.000Z"
-  /v1/activities/{activityId}/forecast:
+  /v1/itineraries/{itineraryId}/activities/{activityIndex}/forecast:
     get:
-      summary: Get weather forecast for an activity
+      summary: Get weather forecast for an activity by index
       tags:
         - Activities
       parameters:
         - in: path
-          name: activityId
+          name: itineraryId
           required: true
-          description: ID of the activity
+          description: ID of the itinerary
           schema:
             type: string
+        - in: path
+          name: activityIndex
+          required: true
+          description: Index of the activity
+          schema:
+            type: integer
       responses:
         '200':
           description: Successful response

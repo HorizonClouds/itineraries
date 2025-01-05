@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import Itinerary from '../src/db/models/itineraryModel.js';
-import * as reviewService from '../src/services/reviewService.js';
+import Itinerary from '../../src/db/models/itineraryModel.js';
+import * as reviewService from '../../src/services/reviewService.js';
 
 const exampleItinerary = {
     _id: "A00000000000000000000001",

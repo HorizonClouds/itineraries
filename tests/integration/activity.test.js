@@ -2,9 +2,9 @@
 import { describe, it, expect, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import Itinerary from '../src/db/models/itineraryModel.js';
-import * as activityService from '../src/services/activityService.js';
-import { ValidationError, NotFoundError } from '../src/utils/customErrors.js';
+import Itinerary from '../../src/db/models/itineraryModel.js';
+import * as activityService from '../../src/services/activityService.js';
+import { ValidationError, NotFoundError } from '../../src/utils/customErrors.js';
 
 const exampleItinerary = {
     _id: "A00000000000000000000001",
@@ -85,10 +85,7 @@ describe('(integration) Activity SERVICE Tests', () => {
         const itinerary = await Itinerary.findById(itineraryId);
         itinerary.activities.push(activity);
         await itinerary.save();
-
-        const activities = await activityService.getActivities(itineraryId);
-        let activityId = activities[0]._id.toString();
-        const result = await activityService.deleteActivity(activityId);
+        const result = await activityService.deleteActivity(itineraryId, 0);
         expect(result).toHaveLength(0);
     });
 

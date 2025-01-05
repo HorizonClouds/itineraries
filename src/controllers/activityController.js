@@ -31,12 +31,12 @@ export const addActivity = async (req, res, next) => {
 
 export const deleteActivity = async (req, res, next) => {
   try {
-    const { activityId } = req.params;
-    const deletedActivity = await activityService.deleteActivity(activityId);
+    const { itineraryId, activityIndex } = req.params;
+    const deletedActivity = await activityService.deleteActivity(itineraryId, activityIndex);
 
     if (!deletedActivity) throw new NotFoundError('Activity not found');
 
-    return res.sendSuccess(null, 'Activity deleted successfully', 204);
+    return res.sendSuccess(null, 'Activity deleted successfully', 200);
   } catch (error) {
     next(error);
   }
@@ -55,13 +55,13 @@ export const getActivities = async (req, res, next) => {
 
 export const getActivityForecast = async (req, res, next) => {
   try {
-    const { activityId } = req.params;
-    const activity = await activityService.getActivityById(activityId);
+    const { itineraryId, activityIndex } = req.params;
+    const activity = await activityService.getActivityFromItinerary(itineraryId, activityIndex);
 
     if (!activity) throw new NotFoundError('Activity not found');
 
     const { latitude, longitude } = activity.location;
-    logger.debug(`Retrieving forecast for activity ${activityId} at coordinates ${latitude}, ${longitude}`);
+    logger.debug(`Retrieving forecast for activity ${activityIndex} in itinerary ${itineraryId}; coordinates: ${latitude}, ${longitude}`);
 
     const forecast = await meteoService.getForecast(latitude, longitude);
     return res.sendSuccess(forecast, 'Forecast retrieved successfully');
@@ -71,12 +71,10 @@ export const getActivityForecast = async (req, res, next) => {
   }
 };
 
-export const getActivityById = async (req, res, next) => {
+export const getActivityFromItinerary = async (req, res, next) => {
   try {
-    const { activityId } = req.params;
-    const activity = await activityService.getActivityById(activityId);
-
-    if (!activity) throw new NotFoundError('Activity not found');
+    const { itineraryId, activityIndex } = req.params;
+    const activity = await activityService.getActivityFromItinerary(itineraryId, activityIndex);
 
     return res.sendSuccess(removeMongoFields(activity), 'Activity retrieved successfully');
   } catch (error) {

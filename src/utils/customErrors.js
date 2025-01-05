@@ -82,4 +82,6 @@ export default {
   UnauthorizedError,
   ForbiddenError,
   BadJsonError,
+  InternalServerError,
+  MeteoServiceError,
 };

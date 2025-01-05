@@ -59,7 +59,7 @@ export const deleteItinerary = async (req, res, next) => {
   try {
     const deletedItinerary = await itineraryService.deleteItinerary(req.params.id);
     if (!deletedItinerary) throw new NotFoundError('Itinerary not found');
-    res.sendSuccess(null, 'Itinerary deleted successfully', 204);
+    res.sendSuccess(null, 'Itinerary deleted successfully', 200);
   } catch (error) {
     next(error);
   }

@@ -4,7 +4,6 @@ import logger from '../utils/logger.js';
 import jwt from 'jsonwebtoken';
 import config from '../config.js';
 import { MeteoServiceError } from '../utils/customErrors.js';
-import { response } from 'express';
 
 export async function getForecast(latitude, longitude) {
     const meteoServiceUrl = await getServiceUrl('meteo');

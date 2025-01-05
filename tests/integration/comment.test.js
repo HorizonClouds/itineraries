@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import * as commentService from '../src/services/commentService.js';
-import Itinerary from '../src/db/models/itineraryModel.js';
-import { NotFoundError, ValidationError } from '../src/utils/customErrors.js';
+import * as commentService from '../../src/services/commentService.js';
+import Itinerary from '../../src/db/models/itineraryModel.js';
+import { NotFoundError, ValidationError } from '../../src/utils/customErrors.js';
 
 const exampleItinerary = {
     _id: "AB0000000000000000000001",

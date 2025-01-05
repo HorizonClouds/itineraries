@@ -1,8 +1,8 @@
 import ItineraryModel from '../db/models/itineraryModel.js';
 import { NotFoundError, BadRequestError, ValidationError } from '../utils/customErrors.js';
+import mongoose from 'mongoose';
 
 export const addActivity = async (itineraryId, activityData) => {
-  // Buscar el itinerario por ID
   let itinerary;
   try {
     itinerary = await ItineraryModel.findById(itineraryId);
@@ -10,48 +10,47 @@ export const addActivity = async (itineraryId, activityData) => {
     throw new NotFoundError('Itinerary not found');
   }
 
-  // Crear el nuevo objeto de actividad
   const newActivity = {
     ...activityData,
-    itineraryId: itinerary._id?.toString(), // Usar el _id del itinerario, no convertir a int
+    itineraryId: itinerary._id.toString(),
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
-  // itinerary.validateActivity(newActivity);
-  // Agregar la actividad al itinerario
   itinerary.activities.push(newActivity);
   let resultItinerary;
   try {
     await itinerary.validate();
-    // Guardar el itinerario actualizado
     resultItinerary = await itinerary.save();
   } catch (error) {
     throw new ValidationError('Error validating itinerary', error);
   }
-
-  // Retornar la nueva actividad
   return resultItinerary.activities[resultItinerary.activities.length - 1];
 };
 
-export const deleteActivity = async (activityId) => {
+export const deleteActivity = async (itineraryId, activityIndex) => {
   let itinerary;
   try {
-    itinerary = await ItineraryModel.findOne({ 'activities._id': activityId });
-    if (!itinerary) throw new NotFoundError('Activity not found');
+    console.log(`Finding itinerary with ID: ${itineraryId}`);
+    itinerary = await ItineraryModel.findById(itineraryId);
+    if (!itinerary) throw new NotFoundError('Itinerary not found');
   } catch (error) {
-    throw new NotFoundError('Activity not found');
+    console.error(`Error finding itinerary: ${error.message}`);
+    throw new NotFoundError('Itinerary not found');
   }
 
   try {
-    const activityIndex = itinerary.activities.findIndex((activity) => activity._id.toString() === activityId);
-    if (activityIndex === -1) {
+    if (activityIndex < 0 || activityIndex >= itinerary.activities.length) {
+      console.warn(`Activity index out of bounds: ${activityIndex}`);
       throw new NotFoundError('Activity not found');
     }
+    console.log(`Deleting activity at index: ${activityIndex}`);
     itinerary.activities.splice(activityIndex, 1);
     await itinerary.save();
+    console.log(`Activity deleted successfully`);
     return itinerary.activities;
   } catch (error) {
+    console.error(`Error deleting activity: ${error.message}`);
     throw new BadRequestError('Error deleting activity', error);
   }
 };
@@ -67,19 +66,17 @@ export const getActivities = async (itineraryId) => {
   return itinerary.activities;
 };
 
-export const getActivityById = async (activityId) => {
+export const getActivityFromItinerary = async (itineraryId, activityIndex) => {
   let itinerary;
   try {
-    itinerary = await ItineraryModel.findOne({ 'activities._id': activityId });
-    if (!itinerary) throw new NotFoundError('Activity not found');
+    itinerary = await ItineraryModel.findById(itineraryId);
+    if (!itinerary) throw new NotFoundError('Itinerary not found');
   } catch (error) {
-    throw new NotFoundError('Activity not found');
+    throw new NotFoundError('Itinerary not found');
   }
-
-  const activity = itinerary.activities.id(activityId);
+  const activity = itinerary.activities[activityIndex];
   if (!activity) throw new NotFoundError('Activity not found');
-
   return activity;
 };
 
-export default { addActivity, deleteActivity, getActivities, getActivityById };
+export default { addActivity, deleteActivity, getActivities, getActivityFromItinerary };
