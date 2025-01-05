@@ -14,12 +14,14 @@ export async function getInfrastructure() {
 
     try {
         logger.info('Attempting to load infrastructure from gateway.');
-        const response = await axios.get(`${config.gatewayUrl}/infrastructure?env=${config.nodeEnv}`);
+        logger.debug(`Infrastructure URL: ${config.gatewayUrl}/api/v1/infrastructure?env=${config.nodeEnv}`);
+        const response = await axios.get(`${config.gatewayUrl}/api/v1/infrastructure?env=${config.nodeEnv}`);
         infrastructure = response.data;
         loaded = true;
         logger.info('Infrastructure successfully loaded from gateway.');
     } catch (error) {
-        logger.info('Failed to load infrastructure from gateway, falling back to GitHub:', error);
+        logger.warn('Failed to load infrastructure from gateway, falling back to GitHub');
+        logger.debug('Error:' + JSON.stringify(error));
         try {
             logger.info('Attempting to load infrastructure from GitHub.');
             const response = await axios.get(`https://raw.githubusercontent.com/HorizonClouds/api-gateway/develop/infrastructure.${config.nodeEnv}.yaml`);
