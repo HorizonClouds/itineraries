@@ -27,7 +27,7 @@ export async function getForecast(latitude, longitude) {
         });
         logger.info('Forecast data successfully retrieved.');
         logger.debug(JSON.stringify(response.data));
-        return response.data;
+        return response.data.data;
     } catch (error) {
         logger.error('Error retrieving forecast data');
         throw new MeteoServiceError('Error retrieving forecast data', { code: error.code, message: error.message, responseData: error.response?.data });
