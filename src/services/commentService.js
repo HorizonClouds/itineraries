@@ -16,8 +16,8 @@ export const createComment = async (comment) => {
   itinerary.comments.push(comment);
   try {
     await itinerary.validate();
-    await itinerary.save();
-    return comment;
+    let savedId = await itinerary.save();
+    return savedId.comments[savedId.comments.length - 1];
   } catch (error) {
     throw new ValidationError('Comment validation failed', error);
   }

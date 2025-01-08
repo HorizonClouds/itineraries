@@ -83,7 +83,7 @@ const token3 = jwt.sign(user3payload, config.jwtSecret, { expiresIn: '1h' });
 
 describe('[Component] Activity Tests', () => {
     let itineraryId;
-    let activityIndex = 0;
+    let activityId;
     let mongoServer;
 
     beforeAll(async () => {
@@ -110,6 +110,8 @@ describe('[Component] Activity Tests', () => {
         itineraryId = itinerary._id.toString();
         itinerary.activities.push({ ...exampleActivity, itineraryId });
         await itinerary.save();
+        const activities = await Itinerary.findById(itineraryId).select('activities');
+        activityId = activities.activities[0]._id.toString(); // Save the activity ID for later use
     });
 
     afterEach(async () => {
@@ -126,9 +128,9 @@ describe('[Component] Activity Tests', () => {
         expect(response.body.data).toHaveProperty('name', 'Test Activity');
     });
 
-    it('[+] should GET an activity by index', async () => {
+    it('[+] should GET an activity by ID', async () => {
         const response = await request(app)
-            .get(`/api/v1/itineraries/${itineraryId}/activities/${activityIndex}`);
+            .get(`/api/v1/itineraries/${itineraryId}/activities/${activityId}`);
         expect(response.status).toBe(200);
         expect(response.body.data).toHaveProperty('name', 'Test Activity');
     });
@@ -142,11 +144,10 @@ describe('[Component] Activity Tests', () => {
         expect(response.body.data[0]).toHaveProperty('name', 'Test Activity');
     });
 
-    it('[+] should DELETE an activity by index', async () => {
+    it('[+] should DELETE an activity by ID', async () => {
         const response = await request(app)
-            .delete(`/api/v1/itineraries/${itineraryId}/activities/${activityIndex}`)
+            .delete(`/api/v1/itineraries/${itineraryId}/activities/${activityId}`)
             .set('Authorization', `Bearer ${token1}`);
-        console.log(response.body);
         expect(response.status).toBe(200);
     });
 
@@ -160,7 +161,7 @@ describe('[Component] Activity Tests', () => {
 
     it('[-] [Auth] DELETE should return 401 if no token is provided', async () => {
         const response = await request(app)
-            .delete(`/api/v1/itineraries/${itineraryId}/activities/${activityIndex}`);
+            .delete(`/api/v1/itineraries/${itineraryId}/activities/${activityId}`);
         expect(response.status).toBe(401);
     });
 
@@ -177,7 +178,7 @@ describe('[Component] Activity Tests', () => {
 
     it('[-] [Auth][Plan] DELETE should return 403 if user plan is not pro', async () => {
         const response = await request(app)
-            .delete(`/api/v1/itineraries/${itineraryId}/activities/${activityIndex}`)
+            .delete(`/api/v1/itineraries/${itineraryId}/activities/${activityId}`)
             .set('Authorization', `Bearer ${token2}`);
         expect(response.status).toBe(403);
     });
@@ -185,7 +186,7 @@ describe('[Component] Activity Tests', () => {
     // [Auth][Addon]
     it('[+] [Auth][Addon] GET forecast should return 200 if user has addon2', async () => {
         const response = await request(app)
-            .get(`/api/v1/itineraries/${itineraryId}/activities/${activityIndex}/forecast`)
+            .get(`/api/v1/itineraries/${itineraryId}/activities/${activityId}/forecast`)
             .set('Authorization', `Bearer ${token3}`);
         expect(response.status).toBe(200);
         expect(response.body.data).toHaveProperty('daily');
@@ -195,7 +196,7 @@ describe('[Component] Activity Tests', () => {
 
     it('[-] [Auth][Addon] GET forecast should return 403 if user does not have addon2', async () => {
         const response = await request(app)
-            .get(`/api/v1/itineraries/${itineraryId}/activities/${activityIndex}/forecast`)
+            .get(`/api/v1/itineraries/${itineraryId}/activities/${activityId}/forecast`)
             .set('Authorization', `Bearer ${token2}`);
         expect(response.status).toBe(403);
     });

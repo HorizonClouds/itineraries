@@ -22,7 +22,6 @@ const exampleComment = {
     userId: 'user1',
     title: 'Test Comment',
     message: 'Test Comment',
-    author: 'Test Author',
     date: new Date()
 };
 
@@ -57,7 +56,6 @@ describe('[Integration][Service] Comment Tests', () => {
     it('[+] should ADD a comment', async () => {
         const result = await commentService.createComment(exampleComment);
         expect(result).toHaveProperty('message', 'Test Comment');
-        expect(result).toHaveProperty('author', 'Test Author');
 
         const dbItinerary = await Itinerary.findById(itineraryId);
         expect(dbItinerary.comments).toHaveLength(2);

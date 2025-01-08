@@ -1,4 +1,3 @@
-
 import { describe, it, expect, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
@@ -79,6 +78,7 @@ describe('(integration) Activity SERVICE Tests', () => {
         expect(activities).toHaveLength(1);
         expect(activities[0]).toHaveProperty('userId', 'user1');
         expect(activities[0]).toHaveProperty('name', 'Surfing');
+        exampleActivity._id = activities[0]._id; // Save the activity ID for later use
     });
 
     it('[+] should DELETE an activity', async () => {
@@ -86,7 +86,9 @@ describe('(integration) Activity SERVICE Tests', () => {
         const itinerary = await Itinerary.findById(itineraryId);
         itinerary.activities.push(activity);
         await itinerary.save();
-        const result = await activityService.deleteActivity(itineraryId, 0);
+        const activities = await activityService.getActivities(itineraryId);
+        const activityId = activities[0]._id.toString();
+        const result = await activityService.deleteActivity(itineraryId, activityId);
         expect(result).toHaveLength(0);
     });
 
@@ -104,7 +106,7 @@ describe('(integration) Activity SERVICE Tests', () => {
     it('[-] should NOT DELETE a non-existent activity', async () => {
         let error;
         try {
-            await activityService.deleteActivity('nonexistentActivityId');
+            await activityService.deleteActivity(itineraryId, 'nonexistentActivityId');
         } catch (e) {
             error = e;
         }

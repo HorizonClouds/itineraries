@@ -28,31 +28,21 @@ export const addActivity = async (itineraryId, activityData) => {
   return resultItinerary.activities[resultItinerary.activities.length - 1];
 };
 
-export const deleteActivity = async (itineraryId, activityIndex) => {
+export const deleteActivity = async (itineraryId, activityId) => {
   let itinerary;
   try {
-    console.log(`Finding itinerary with ID: ${itineraryId}`);
     itinerary = await ItineraryModel.findById(itineraryId);
     if (!itinerary) throw new NotFoundError('Itinerary not found');
   } catch (error) {
-    console.error(`Error finding itinerary: ${error.message}`);
     throw new NotFoundError('Itinerary not found');
   }
 
-  try {
-    if (activityIndex < 0 || activityIndex >= itinerary.activities.length) {
-      console.warn(`Activity index out of bounds: ${activityIndex}`);
-      throw new NotFoundError('Activity not found');
-    }
-    console.log(`Deleting activity at index: ${activityIndex}`);
-    itinerary.activities.splice(activityIndex, 1);
-    await itinerary.save();
-    console.log(`Activity deleted successfully`);
-    return itinerary.activities;
-  } catch (error) {
-    console.error(`Error deleting activity: ${error.message}`);
-    throw new BadRequestError('Error deleting activity', error);
-  }
+  const activityIndex = itinerary.activities.findIndex(activity => activity._id.toString() === activityId);
+  if (activityIndex === -1) throw new NotFoundError('Activity not found');
+
+  itinerary.activities.splice(activityIndex, 1);
+  await itinerary.save();
+  return itinerary.activities;
 };
 
 export const getActivities = async (itineraryId) => {
@@ -66,7 +56,7 @@ export const getActivities = async (itineraryId) => {
   return itinerary.activities;
 };
 
-export const getActivityFromItinerary = async (itineraryId, activityIndex) => {
+export const getActivityFromItinerary = async (itineraryId, activityId) => {
   let itinerary;
   try {
     itinerary = await ItineraryModel.findById(itineraryId);
@@ -74,7 +64,7 @@ export const getActivityFromItinerary = async (itineraryId, activityIndex) => {
   } catch (error) {
     throw new NotFoundError('Itinerary not found');
   }
-  const activity = itinerary.activities[activityIndex];
+  const activity = itinerary.activities.find(activity => activity._id.toString() === activityId);
   if (!activity) throw new NotFoundError('Activity not found');
   return activity;
 };
