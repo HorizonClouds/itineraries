@@ -31,6 +31,14 @@ export const getCommentsByItinerary = async (itineraryId) => {
   return itinerary.comments;
 };
 
+export const getCommentById = async (commentId) => {
+  const itinerary = await Itinerary.findOne({ 'comments._id': commentId });
+  if (!itinerary) {
+    throw new NotFoundError('Comment not found');
+  }
+  return itinerary.comments.id(commentId);
+};
+
 export const deleteComment = async (commentId) => {
   const itinerary = await Itinerary.findOneAndUpdate(
     { 'comments._id': commentId },
@@ -50,5 +58,6 @@ export const deleteComment = async (commentId) => {
 export default {
   createComment,
   getCommentsByItinerary,
+  getCommentById,
   deleteComment,
 };

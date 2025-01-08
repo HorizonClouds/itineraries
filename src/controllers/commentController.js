@@ -29,14 +29,16 @@ export const deleteComment = async (req, res, next) => {
   const { commentId } = req.params;
 
   try {
+    const comment = await commentService.getCommentById(commentId);
+    if (!comment) {
+      throw new NotFoundError('Comment not found');
+    }
     await commentService.deleteComment(commentId);
     res.sendSuccess({}, 'Comment deleted', 200);
   } catch (error) {
     next(error);
   }
 };
-
-
 
 export default {
   getCommentsForItinerary,
