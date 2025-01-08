@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import config from '../../src/config.js';
 
 const exampleItinerary = {
+    userId: 'user1',
     name: 'Test Itinerary',
     description: 'Test Description',
     startDate: new Date(),

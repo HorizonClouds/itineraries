@@ -5,6 +5,7 @@ import { createItinerary, deleteItinerary, getAllItineraries, getItineraryById }
 import Itinerary from '../../src/db/models/itineraryModel.js';
 
 const exampleItinerary = {
+    userId: 'user1',
     name: 'Test Itinerary',
     description: 'Test Description',
     startDate: new Date(),

@@ -8,6 +8,7 @@ import commentSchema from './commentSchema.js';
 
 // Create a schema for Itinerary with validation
 export const itinerarySchema = new mongoose.Schema({
+  userId: { type: String, required: true },
   name: {
     type: String,
     required: [true, 'Name is required'],

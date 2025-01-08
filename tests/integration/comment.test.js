@@ -7,6 +7,7 @@ import { NotFoundError, ValidationError } from '../../src/utils/customErrors.js'
 
 const exampleItinerary = {
     _id: "AB0000000000000000000001",
+    userId: 'user1',
     name: 'Test Itinerary',
     description: 'Test Description',
     startDate: new Date(),

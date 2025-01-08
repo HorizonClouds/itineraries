@@ -5,6 +5,7 @@ import Itinerary from '../../src/db/models/itineraryModel.js';
 import * as reviewService from '../../src/services/reviewService.js';
 
 const exampleItinerary = {
+    userId: 'user1',
     _id: "A00000000000000000000001",
     name: 'Test Itinerary',
     description: 'Test Description',
