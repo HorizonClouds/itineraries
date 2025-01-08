@@ -1,0 +1,141 @@
+paths:
+  /v1/itineraries/{itineraryId}/comments:
+    post:
+      summary: Submit a comment for an itinerary
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: itineraryId
+          required: true
+          description: ID of the itinerary
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentPost"
+      responses:
+        "201":
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Comment added successfully
+                  data:
+                    $ref: "#/components/schemas/Comment"
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+
+    get:
+      summary: Get all comments for a specific itinerary
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: itineraryId
+          required: true
+          description: ID of the itinerary to get comments for
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+
+  /v1/comments/{commentId}:
+    delete:
+      summary: Delete a comment
+      tags:
+        - Comment
+      parameters:
+        - in: path
+          name: commentId
+          required: true
+          description: ID of the comment to delete
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Comment deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Comment deleted successfully
+                  appCode:
+                    type: string
+                    example: OK
+                  timestamp:
+                    type: string
+                    example: "2023-10-01T12:00:00.000Z"
+
+components:
+  schemas:
+    CommentPost:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "user12345"
+        title:
+          type: string
+          example: "Great experience!"
+        message:
+          type: string
+          example: "Amazing experience! Food was great, people were friendly, and the sights were breathtaking."
+      required:
+        - itineraryId
+        - userId
+        - message
+
+    Comment:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "FFFFFFFFFFFFFFFFFFFFFFFF"
+        itineraryId:
+          type: string
+          example: "itinerary12345"
+        userId:
+          type: string
+          example: "user12345"
+        title:
+          type: string
+          example: "Great experience!"
+        message:
+          type: string
+          example: "Amazing experience! Food was great, people were friendly, and the sights were breathtaking."
+        createdAt:
+          type: string
+          format: date-time
+          example: "2022-12-01T00:00:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2022-12-01T00:00:00.000Z"

@@ -1,0 +1,80 @@
+[
+    {
+        "_id": "100000000000000000000001",
+        "userId": "000000000000000000000001",
+        "name": "Trip to the beach",
+        "description": "A trip to the beach with friends",
+        "startDate": "2022-12-01T00:00:00.000Z",
+        "endDate": "2022-12-05T00:00:00.000Z",
+        "category": "RELAX",
+        "createdAt": "2022-12-01T00:00:00.000Z",
+        "updatedAt": "2022-12-01T00:00:00.000Z",
+        "activities": [
+            {
+                "_id": "110000000000000000000001",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000001",
+                "name": "Surfing",
+                "description": "Surfing at the beach",
+                "startDate": "2022-12-02T00:00:00.000Z",
+                "endDate": "2022-12-02T00:00:00.000Z",
+                "createdAt": "2022-12-01T00:00:00.000Z",
+                "updatedAt": "2022-12-01T00:00:00.000Z",
+                "location": {
+                    "latitude": 37.7749,
+                    "longitude": -122.4194,
+                    "address": "Fuengirola Beach"
+                }
+            },
+            {
+                "_id": "110000000000000000000002",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000001",
+                "name": "Dinner",
+                "description": "Dinner at the beach",
+                "startDate": "2022-12-02T00:00:00.000Z",
+                "endDate": "2022-12-02T00:00:00.000Z",
+                "createdAt": "2022-12-01T00:00:00.000Z",
+                "updatedAt": "2022-12-01T00:00:00.000Z",
+                "location": {
+                    "latitude": 37.7749,
+                    "longitude": -122.4194,
+                    "address": "Marbella Beach"
+                }
+            }
+        ],
+        "comments": [
+            {
+                "_id": "120000000000000000000001",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000002",
+                "title": "Great experience",
+                "message": "It's a great experience to be at the beach!",
+                "createdAt": "2022-12-01T00:00:00.000Z",
+                "updatedAt": "2022-12-01T00:00:00.000Z"
+            },
+            {
+                "_id": "120000000000000000000002",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000003",
+                "title": "Memorable trip",
+                "message": "I had a great time with my friends!",
+                "createdAt": "2022-12-01T00:00:00.000Z",
+                "updatedAt": "2022-12-01T00:00:00.000Z"
+            }
+
+        ],
+        "reviews": [
+            {
+                "_id": "130000000000000000000001",
+                "itineraryId": "100000000000000000000001",
+                "userId": "000000000000000000000002",
+                "score": 9,
+                "title": "Great experience",
+                "message": "I loved the experience!",
+                "createdAt": "2022-12-01T00:00:00.000Z",
+                "updatedAt": "2022-12-01T00:00:00.000Z"
+            }
+        ]
+    }
+]
