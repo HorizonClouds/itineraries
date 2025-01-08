@@ -47,6 +47,7 @@ export const getItineraryById = async (req, res, next) => {
 export const updateItinerary = async (req, res, next) => {
   try {
     let data = req.body;
+    data.userId = req.user.userId;
     const updatedItinerary = await itineraryService.updateItinerary(req.params.id, data);
     if (!updatedItinerary) throw new NotFoundError('Itinerary not found');
     res.sendSuccess(removeMongoFields(updatedItinerary), 'Itinerary updated successfully');

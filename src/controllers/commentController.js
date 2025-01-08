@@ -36,21 +36,10 @@ export const deleteComment = async (req, res, next) => {
   }
 };
 
-export const updateComment = async (req, res, next) => {
-  const { commentId } = req.params;
-  const commentData = req.body;
 
-  try {
-    const updatedComment = await commentService.updateComment(commentId, commentData);
-    res.sendSuccess(updatedComment, 'Comment updated', 200);
-  } catch (error) {
-    next(error);
-  }
-};
 
 export default {
   getCommentsForItinerary,
   createComment,
-  updateComment,
   deleteComment,
 };

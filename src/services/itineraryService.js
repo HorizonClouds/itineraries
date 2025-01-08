@@ -39,6 +39,7 @@ export const updateItinerary = async (id, data) => {
       id,
       {
         $set: {
+          userId: data.userId || originalItinerary.userId,
           name: data.name || originalItinerary.name,
           description: data.description || originalItinerary.description,
           startDate: data.startDate || originalItinerary.startDate,
